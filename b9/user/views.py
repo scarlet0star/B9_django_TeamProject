@@ -5,7 +5,6 @@ from django.contrib import messages
 from .forms import *
 from .models import Profile
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-
 # Create your views here.
 
 
@@ -18,8 +17,6 @@ def user_signup(request):
         form = UserCreateForm(request.POST)
         if form.is_valid():
             user = form.save()
-            profile = Profile(user=user)
-            profile.save()
             return redirect('user:login')
         else:
             messages.error(request, form.errors)
@@ -53,7 +50,7 @@ def user_login(request):
 
 def user_logout(request):
     logout(request)
-    return redirect('home')
+    return redirect('user:login')
 
 
 @login_required

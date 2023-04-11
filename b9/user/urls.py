@@ -10,5 +10,5 @@ urlpatterns = [
     path('login/',views.user_login,name='login'),
     path('logout/',views.user_logout,name='logout'),
     path('follows/',views.follow_list,name='follow'),
-    path('follow/@<str:username>',views.add_or_sub_follower,name='following')
+    path('follow/@<str:username>',views.add_or_sub_follower,name='following'),
 ]
