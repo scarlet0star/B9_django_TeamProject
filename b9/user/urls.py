@@ -9,5 +9,6 @@ urlpatterns = [
     path("signup/", views.user_signup,name='signup'),
     path('login/',views.user_login,name='login'),
     path('logout/',views.user_logout,name='logout'),
-    path('profile/',views.user_logout,name='profile'),
+    path('follows/',views.follow_list,name='follow'),
+    path('follow/@<str:username>',views.add_or_sub_follower,name='following')
 ]
