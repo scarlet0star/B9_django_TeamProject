@@ -5,6 +5,9 @@ from django.contrib import messages
 from .forms import *
 from .models import Profile
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import get_user_model
+
 # Create your views here.
 
 
@@ -48,10 +51,35 @@ def user_login(request):
     return render(request, 'user/login.html', {'form': form})
 
 
+@login_required
 def user_logout(request):
     logout(request)
     return redirect('user:login')
 
+
+@login_required
+def user_mypage(request):
+    user = request.user
+    profile = Profile.objects.get(user=user)
+    return render(request, 'user/mypage.html',{'profile':profile})
+
+
+@login_required
+def user_mypage_update(request):
+
+    if request.method == 'POST':
+        form = UserUpdateForm(request.POST, instance=request.user)
+        profileform = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
+
+        if form.is_valid() and profileform.is_valid():
+            form.save()
+            profileform.save()
+            messages.success(request, '프로필이 업데이트 되었습니다!')
+            return redirect('/user/mypage')
+    else:
+        user_form = UserUpdateForm(instance=request.user)
+        profile_form = ProfileForm(instance=request.user.profile)
+    return render(request, 'user/mypage_update.html', {'form': user_form, 'profileform': profile_form})
 
 @login_required
 def follow_list(request):

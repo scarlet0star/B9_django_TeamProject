@@ -11,9 +11,9 @@ class User(AbstractUser):
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE,related_name='profile')
-    subscript = models.CharField("유저소개문(짧게)", max_length=200,blank=True)
-    profile_image = models.ImageField("유저이미지",null=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    subscript = models.CharField("유저소개문(짧게)", max_length=200, blank=True)
+    profile_image = models.ImageField("유저이미지", upload_to='profile_images/', blank=True, null=True)
     follows = models.ManyToManyField(
         'self', through='Follow', related_name='follwers', symmetrical=False)
     
@@ -29,3 +29,4 @@ class Follow(models.Model):
 
     def __str__(self):
         return f'{self.follower} 팔로우-> {self.followee}'
+
