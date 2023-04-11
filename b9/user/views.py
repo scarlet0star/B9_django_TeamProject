@@ -1,5 +1,6 @@
 from django.contrib.auth import login, logout, authenticate
-from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect,get_object_or_404
 from django.contrib import messages
 from .forms import *
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
@@ -40,7 +41,7 @@ def user_login(request):
                 return redirect('/user/index')
             else:
                 messages.error(request, "user is None")
-        else:
+        else:   
             messages.error(request, "form is not valid")
             print("Form Errors: ", form.errors)
             print("Non-field Errors: ", form.non_field_errors())
@@ -53,7 +54,6 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect('home')
-
 
 @login_required
 def user_mypage(request):
@@ -78,3 +78,20 @@ def user_mypage_update(request):
         user_form = UserUpdateForm(instance=request.user)
         profile_form = ProfileForm(instance=request.user.profile)
     return render(request, 'user/mypage_update.html', {'form': user_form, 'profileform': profile_form})
+
+@login_required
+def follow_list(request):
+    follows = request.user.Profile.follows.all()
+    return render(request,'user/follow_list.html',{'follows':follows})
+
+@login_required
+def add_or_sub_follower(request,uid):
+    target = get_object_or_404('Profile',pk=uid)
+    user_profile = request.user.Profile
+    
+    if user_profile.follows.filter(id=target.id).exist():
+        user_profile.follows.remove(target)
+    else:
+        user_profile.follows.add(target)
+
+    return 

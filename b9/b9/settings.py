@@ -19,15 +19,29 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+AUTHENTICATION_BACKEND = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
 # Application definition
 
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
+    "django.contrib.sites",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+
+    # 외부 모듈들
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+
+    # 생성 앱
     "user",
     "post",
 ]
@@ -44,10 +58,11 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "b9.urls"
 
+TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
 TEMPLATES = [
     {
-        "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / 'templates'],
+        "BACKEND": "django.template.backends.django.DjangoTemplates"
+        "DIRS": [TEMPLATES_DIR],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -55,6 +70,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                'django.template.context_processors.request',
             ],
         },
     },
@@ -79,7 +95,7 @@ DATABASES = {
 
 AUTH_USER_MODEL = 'user.User'
 LOGIN_URL = '/user/login'
-
+LOGIN_REDIRECT_URL = '/'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -117,3 +133,17 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+SITE_ID = 1
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
