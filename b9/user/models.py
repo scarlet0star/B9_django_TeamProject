@@ -16,6 +16,9 @@ class Profile(models.Model):
     profile_image = models.ImageField("유저이미지", upload_to='profile_images/', blank=True, null=True)
     follows = models.ManyToManyField(
         'self', through='Follow', related_name='follwers', symmetrical=False)
+    
+    def __str__(self):
+        return f'{self.user.username}'
 
 
 class Follow(models.Model):
@@ -23,3 +26,7 @@ class Follow(models.Model):
         Profile, related_name="following", on_delete=models.CASCADE)
     followee = models.ForeignKey(
         Profile, related_name="followed_by", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.follower} 팔로우-> {self.followee}'
+
