@@ -1,12 +1,15 @@
 from django.urls import path
 from . import views
 
+app_name = 'post'
+
 urlpatterns = [
     path('', views.home, name='home'),
     path('create/', views.post_create, name='post_create'),
+    path('<int:id>/update/', views.UpdatePost.as_view(), name='post_update'),
     path('<int:id>/', views.detail_post, name='detail'),
     path('<int:post_id>/like/', views.toggle_like, name='toggle_like'),
-    path('<int:post_id>/', views.post_detail, name='detail_post'),
+    path('<int:post_id>/', views.detail_post, name='detail_post'),
     path('<int:post_id>/comment/add/', views.add_comment, name='add_comment'),
     path('all-delete/', views.all_delete, name='all_delete'),
     path('edit_comment/<int:comment_id>/', views.edit_comment, name='edit_comment'),

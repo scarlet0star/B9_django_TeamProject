@@ -7,7 +7,9 @@ from .models import Profile
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
-
+from post.models import Post, Like
+from django.views.generic import ListView
+from django.db.models import Q
 # Create your views here.
 
 
@@ -58,10 +60,12 @@ def user_logout(request):
 
 
 @login_required
-def user_mypage(request):
-    user = request.user
+def user_mypage(request,username):
+    user = get_object_or_404(get_user_model(), username=username)
     profile = Profile.objects.get(user=user)
-    return render(request, 'user/mypage.html', {'profile': profile})
+    all_mypost = Post.objects.filter(writer=username).order_by('-created_at')
+    likes = Like.objects.filter(user=username)
+    return render(request, 'user/mypage.html', {'profile': profile, 'posts': all_mypost, 'likes':likes})
 
 
 @login_required
@@ -100,3 +104,23 @@ def add_or_sub_follower(request, username):
         user_profile.follows.add(target_profile)
 
     return redirect('user:index')
+
+
+class UserList(ListView):
+    model = get_user_model()
+    template_name = 'user/user_list.html'
+    context_object_name = 'users'
+    paginate_by = 10
+
+    def get_queryset(self):
+        query = self.request.GET.get('query', '')
+        search_by = self.request.GET.get('search_by', 'author')
+
+        if query:
+            if search_by == 'ID':
+                return self.model.objects.filter(username__icontains=query)
+            elif search_by == 'first_name':
+
+                return self.model.objects.filter(Q(first_name__icontains=query) | Q(last_name__icontains=query))
+        else:
+            return self.model.objects.none()
