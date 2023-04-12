@@ -4,15 +4,21 @@ from .models import Post, Comment, Like
 from user.models import Profile, User
 from .forms import PostForm
 from django.http import HttpResponse
+from django.views.generic import UpdateView
+from django.urls import reverse_lazy
 # Create your views here.
 
 # 메인 페이지
+
+
 def home(request):
     posts = Post.objects.all().order_by('-created_at')
     likes = Like.objects.all()
-    return render (request, 'post/home.html', {'posts': posts, 'likes':likes})
+    return render(request, 'post/home.html', {'posts': posts, 'likes': likes})
 
 # 글 작성 view
+
+
 @login_required
 def post_create(request):
     if request.method == 'POST':
@@ -20,25 +26,40 @@ def post_create(request):
         user = request.user
         if form.is_valid():
             post = Post(
-                writer = user,
-                title = form.cleaned_data.get('title'),
-                post = form.cleaned_data.get('post'),
-                photo = form.cleaned_data.get('photo'),
+                writer=user,
+                title=form.cleaned_data.get('title'),
+                post=form.cleaned_data.get('post'),
+                photo=form.cleaned_data.get('photo'),
             )
             post.save()
             return redirect('/post')
     if request.method == 'GET':
         form = PostForm()
-    return render(request, 'post/post_create.html',{'form': form})
+    return render(request, 'post/post_create.html', {'form': form})
 
 
-#댓글 추가
-@login_required 
-def add_comment(request,post_id):
-    post = get_object_or_404(Post,pk=post_id)
+class UpdatePost(UpdateView):
+    model = Post
+    form_class = PostForm
+    pk_url_kwarg = 'id'
+    template_name = 'post/post_create.html'
+
+    def get_success_url(self):
+        return reverse_lazy('post:detail', kwargs={'id': self.object.pk})
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['update'] = True
+        return context
+
+
+# 댓글 추가
+@login_required
+def add_comment(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
     if request.method == 'POST':
         content = request.POST.get('content')
-        author = request.user 
+        author = request.user
         comment = Comment.objects.create(
             content=content,
             author=author,
@@ -49,12 +70,12 @@ def add_comment(request,post_id):
         return redirect('post_list')
 
 
-#게시물에 대한 좋아요를 토글하는 함수
+# 게시물에 대한 좋아요를 토글하는 함수
 @login_required
 def toggle_like(request, post_id):
     if request.user.is_authenticated:
         post = get_object_or_404(Post, pk=post_id)
-        user =request.user
+        user = request.user
         if post.like_users.filter(pk=user.pk).exists():
             post.like_users.remove(user)
             post.like_count -= 1
@@ -77,6 +98,7 @@ def toggle_like(request, post_id):
 def all_delete(request):
     Post.objects.all().delete()
     return redirect('/post')
+
 
 @login_required
 def detail_post(request, id):
