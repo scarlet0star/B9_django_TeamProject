@@ -13,7 +13,7 @@ urlpatterns = [
     path('logout/',views.user_logout,name='logout'),
     path('follows/',views.follow_list,name='follow'),
     path('follow/@<str:username>',views.add_or_sub_follower,name='following'),
-    path('mypage/', views.user_mypage, name='mypage'),
     path('mypage/update', views.user_mypage_update, name='mypage-update'),
+    path('mypage/<str:username>', views.user_mypage, name='mypage'),
 
 ]

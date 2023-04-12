@@ -20,6 +20,62 @@
 {{user.last_name}}
 {{user.first_name}}
 {{user.email}}
+{% if user.username == profile.user.username %}
 <a type="button" class="btn btn-primary" href="/user/mypage/update">수정</a>
+{% endif %}
 <a type="button" class="btn btn-danger" href="">뒤로</a>
+
+<div class="col-md-7">
+    <hr>
+    <!-- 작성 된 글이 나오는 곳 -->
+    {% for post in posts %}
+    <div class="col-md-12 mb-2">
+        <div class="card" style="height: 9rem;">
+            <div class="card-body">
+                <div class="media">
+                    <div class="media-body">
+                        <h5 class="mt-0">{{ post.title }}</h5>
+                    </div>
+                    {% if post.writer == user.id %}
+                    <div style="text-align: right">
+                        <a href="/post/{{ post.id }}/delete">
+                            <span class="badge rounded-pill bg-danger">삭제</span>
+                        </a>
+                    </div>
+                    {% endif %}
+                    <div style="text-align: right">
+                        <a href="/post/{{ post.id }}">
+                            <span class="badge rounded-pill bg-success">보기</span>
+                        </a>
+                    </div>
+                    <div style="text-align: right">
+                        {% if user in post.like_users.all %}
+                        <a href="/post/{{ post.id }}/like/">
+                            <span class="badge rounded-pill bg-danger">좋아요 취소</span>
+                        </a>
+                        {% else %}
+                        <a href="/post/{{ post.id }}/like/">
+                            <span class="badge rounded-pill bg-danger">좋아요</span>
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div style="text-align: left; margin-top: 7px;">
+                    <span style="font-size: small">좋아요 수:{{ post.like_count}}</span>
+                </div>
+                <div style="text-align: right;">
+                    <span style="font-size: small">{{ post.writer.username }}-
+                        {{post.created_at|timesince}} 전</span>
+                </div>
+                </form>
+
+
+            </div>
+
+
+
+        </div>
+    </div>
+    {% endfor %}
+</div>
 {% endblock %}
