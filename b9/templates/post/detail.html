@@ -64,7 +64,6 @@
                                     </div>
                                     <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
                                         <span style="font-size: small">By. {{ post_detail.writer.last_name }} {{ post_detail.writer.first_name }} - {{ post_detail.created_at|timesince }} 전</span>
-
                                         {# like와 comment 아이콘 넣겠습니다 ~ 여유 된다면 호버+자바로 클릭 모션까지 도전.. > like 클릭시 하트+1, comment 클릭시 댓글창으로 navigatar기능? 그런데 바로 밑인데 굳이 필요할까 싶네요#}
                                         <span style="font-size: small">like {{ post_detail.like_count }} | comment {{ post_detail.comment_count }}</span>
                                     </div>
@@ -82,12 +81,12 @@
                                     <div class="media-body">
                                         <h5 class="mt-0">나의 이야기를 적어주세요</h5>
                                         <p>
-                                        <form action="/post/{{ post_detail.id }}/comment/" method="post">
+                                            <form action="/post/{{ post_detail.id }}/comment/" method="post">
                                             {% csrf_token %}
                                             <div class="form-group mb-2">
                                                                 <textarea class="form-control" style="resize: none"
-                                                                          name='my-content'
-                                                                          id="my-content"></textarea>
+                                                                            name='my-content'
+                                                                            id="my-content"></textarea>
                                             </div>
                                             <button type="submit" class="btn btn-primary" style="float:right;">작성하기
                                             </button>
@@ -99,8 +98,32 @@
                         </div>
                     </div>
                 </div>
-</div>
-<div class="col-md-2"></div>
-</div>
-</div>
-{% endblock %}
+                <h1>{{ post.title }}</h1>
+                <h1>{{ post.title }}</h1>
+                <p>{{ post.content }}</p>
+                <p>작성일: {{ post.created_at }}</p>
+                <p>수정일: {{ post.updated_at }}</p>
+                <h2>댓글</h2>
+                {% if user.is_authenticated %}
+                    <form action="{% url 'post:add_comment' post.id %}" method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit">댓글 등록</button>
+                    </form>
+                    {% else %}
+                    <p><a href="{% url 'login' %}?next={{ request.path }}">로그인</a> 후 댓글을 등록할 수 있습니다.</p>
+                    {% endif %}
+                    {% for comment in post.comments.all %}
+                    <div>
+                        <p>{{ comment.content }}</p>
+                        <p>작성자: {{ comment.author }}</p>
+                        <p>작성일: {{ comment.created_at }}</p>
+                        {% if comment.author == user %}
+                        <a href="{% url 'post:edit_comment' comment.id %}">수정</a>
+                        <a href="{% url 'post:delete_comment' comment.id %}">삭제</a>
+                        {% endif %}
+                    </div>
+                    {% empty %}
+                    <p>등록된 댓글이 없습니다.</p>
+                {% endfor %}
+                    {% endblock %}
