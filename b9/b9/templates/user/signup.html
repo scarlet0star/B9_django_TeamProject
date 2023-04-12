@@ -7,14 +7,10 @@
     <title>Document</title>
 </head>
 <body>
-    {% if follows %}
-    {% for follow in follows %}
-    <ul>
-        <li>{{follow}}</li>
-    </ul>
-    {% endfor %}
-    {%else%}
-    팔로우가 업스빈다
-    {% endif %}
+    <form method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+    <input type="submit">
+    </form>
 </body>
 </html>
