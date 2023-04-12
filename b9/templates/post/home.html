@@ -41,7 +41,7 @@
                             <div class="media-body">
                                 <h5 class="mt-0">{{ post.title }}</h5>
                             </div>
-                            {% if post.write == user.id %}
+                            {% if post.writer == user.id %}
                             <div style="text-align: right">
                                 <a href="/post/{{ post.id }}/delete">
                                     <span class="badge rounded-pill bg-danger">삭제</span>

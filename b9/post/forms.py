@@ -1,9 +1,9 @@
 from django import forms
-from .models import PostModel
+from .models import Post
 # 글을 작성하는 폼입니다. 위젯으로 작성공간 만들어줬습니다.
 class PostForm(forms.ModelForm):
     class Meta:
-        model = PostModel
+        model = Post
         fields = ('title', 'post', 'photo')
         widgets = {
         'title': forms.TextInput(attrs={'class': 'form-control mt-2'}),
