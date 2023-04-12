@@ -13,6 +13,16 @@
     {% else %}
         <a href="{% url 'user:login' %}">로그인</a>
         <a href="{% url 'user:signup' %}">회원가입</a>
-    {% endif %}    
+    {% endif %}
+    
+    <form method="GET" action="{% url 'user:user_search' %}">
+        <input type="text" name="query" placeholder="Search" value="{{ request.GET.query }}">
+        <select name="search_by">
+            <option value="ID" {% if request.GET.search_by == 'ID' %}selected{% endif %}>ID</option>
+            <option value="first_name" {% if request.GET.search_by == 'first_name' %}selected{% endif %}>이름</option>
+        </select>
+        <button type="submit">Search</button>
+    </form>
+
 </body>
 </html>

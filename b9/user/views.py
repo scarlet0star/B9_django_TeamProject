@@ -7,7 +7,8 @@ from .models import Profile
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
-
+from django.views.generic import ListView
+from django.db.models import Q
 # Create your views here.
 
 
@@ -100,3 +101,23 @@ def add_or_sub_follower(request, username):
         user_profile.follows.add(target_profile)
 
     return redirect('user:index')
+
+
+class UserList(ListView):
+    model = get_user_model()
+    template_name = 'user/user_list.html'
+    context_object_name = 'users'
+    paginate_by = 10
+
+    def get_queryset(self):
+        query = self.request.GET.get('query', '')
+        search_by = self.request.GET.get('search_by', 'author')
+
+        if query:
+            if search_by == 'ID':
+                return self.model.objects.filter(username__icontains=query)
+            elif search_by == 'first_name':
+
+                return self.model.objects.filter(Q(first_name__icontains=query) | Q(last_name__icontains=query))
+        else:
+            return self.model.objects.none()
