@@ -61,15 +61,15 @@ def user_logout(request):
 def user_mypage(request):
     user = request.user
     profile = Profile.objects.get(user=user)
-    return render(request, 'user/mypage.html',{'profile':profile})
+    return render(request, 'user/mypage.html', {'profile': profile})
 
 
 @login_required
 def user_mypage_update(request):
-
     if request.method == 'POST':
         form = UserUpdateForm(request.POST, instance=request.user)
-        profileform = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
+        profileform = ProfileForm(
+            request.POST, request.FILES, instance=request.user.profile)
 
         if form.is_valid() and profileform.is_valid():
             form.save()
@@ -80,6 +80,7 @@ def user_mypage_update(request):
         user_form = UserUpdateForm(instance=request.user)
         profile_form = ProfileForm(instance=request.user.profile)
     return render(request, 'user/mypage_update.html', {'form': user_form, 'profileform': profile_form})
+
 
 @login_required
 def follow_list(request):
