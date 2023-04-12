@@ -14,5 +14,8 @@ urlpatterns = [
     path('all-delete/', views.all_delete, name='all_delete'),
     path('edit_comment/<int:comment_id>/', views.edit_comment, name='edit_comment'),
     path('delete_comment/<int:comment_id>/', views.delete_comment, name='delete_comment'),
+    path('tag/', views.TagCloudTV.as_view(), name='tag_cloud'),
+    # 태그 내 문자열로 들어가면
+    path('tag/<str:tag>/', views.TaggedObjectLV.as_view(), name='tagged_object_list'),
     # path('like_notifications/', views.like_notifications, name='like_notifications'),
 ]

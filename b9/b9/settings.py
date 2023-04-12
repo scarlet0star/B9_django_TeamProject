@@ -32,7 +32,12 @@ INSTALLED_APPS = [
     # 생성 앱
     "user",
     "post",
+# 태그 앱
+    'taggit.apps.TaggitAppConfig',
+    'taggit_templatetags2',
 ]
+TAGGIT_CASE_INSENSITIVE = True
+TAGGIT_LIMIT = 50
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",

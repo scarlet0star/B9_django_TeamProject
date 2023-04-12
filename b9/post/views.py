@@ -7,15 +7,23 @@ from .forms import PostForm, CommentForm
 from django.http import HttpResponse
 from django.views.generic import UpdateView
 from django.urls import reverse_lazy
+from django.core.paginator import Paginator
+from django.views.generic import ListView, TemplateView
 # Create your views here.
 
 # 메인 페이지
 
 
 def home(request):
-    posts = Post.objects.all().order_by('-created_at')
-    likes = Like.objects.all()
-    return render(request, 'post/home.html', {'posts': posts, 'likes': likes})
+    post_list = Post.objects.all().order_by('-created_at')
+    # 포스트리스트를 5개씩 나누기
+    paginator = Paginator(post_list, 5)
+    # 페이지에 해당되는 페이지의 번호를 받아오기
+    page = request.GET.get('page')
+    # 페이지 번호를 받아서 해당 페이지 게시글들을 리턴하기
+    posts = paginator.get_page(page)
+    # 받아온 페이지를 render를 통해 넘겨주기
+    return render (request, 'post/home.html', {'posts': posts})
 
 # 글 작성 view
 @login_required
@@ -23,18 +31,40 @@ def post_create(request):
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
         user = request.user
+        tags = request.POST.get('tags', '').split(',')
+
         if form.is_valid():
-            post = Post(
+            post = Post.objects.create(
                 writer=user,
                 title=form.cleaned_data.get('title'),
                 post=form.cleaned_data.get('post'),
                 photo=form.cleaned_data.get('photo'),
             )
+            for tag in tags:
+                tag = tag.strip()
+                if tag != '':
+                    post.tags.add(tag)
             post.save()
             return redirect('/post')
     if request.method == 'GET':
         form = PostForm()
     return render(request, 'post/post_create.html', {'form': form})
+
+class TagCloudTV(TemplateView):
+    template_name = 'taggit/tag_cloud_view.html'
+
+# 태그가 있으면 태그를 보여주겠다.
+class TaggedObjectLV(ListView):
+    template_name = 'taggit/tag_with_post.html'
+    model = Post
+
+    def get_queryset(self):
+        return Post.objects.filter(tags__name=self.kwargs.get('tag'))
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tagname'] = self.kwargs['tag']
+        return context
 
 class UpdatePost(UpdateView):
     model = Post
