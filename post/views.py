@@ -28,6 +28,7 @@ def post_create(request):
                 writer = user,
                 title = form.cleaned_data.get('title'),
                 post = form.cleaned_data.get('post'),
+                photo = form.changed_data.get('photo'),
             )
             post.save()
             return redirect('/post')

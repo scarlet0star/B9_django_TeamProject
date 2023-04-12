@@ -11,6 +11,7 @@ class PostModel(models.Model):
     writer = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=20)
     post = models.TextField()
+    photo = models.ImageField(blank=True, upload_to="media/%Y/%m/%d")
     like_users = models.ManyToManyField(User, related_name='like_articles')
     like_count = models.IntegerField(blank=True, null=True,default=0)
     created_at = models.DateTimeField(auto_now_add=True)
