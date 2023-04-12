@@ -1,12 +1,18 @@
 {% load socialaccount %}
 {% providers_media_js %}
 <html>
-  <body>
-    {% if user.is_authenticated %}
-      <p>Welcome, {{ user.username }}!</p>
-      <a href="{% url 'account_logout' %}">Logout</a>
-    {% else %}
-      <a href="{% provider_login_url 'google' %}">Google Connect</a>
-    {% endif %}
-  </body>
+
+<body>
+  {% if user.is_authenticated %}
+  <p>Welcome, {{ user.username }}!</p>
+  <div style="text-align: center">
+    <button type="submit" class="btn btn-primary">작성하기</button>
+    <a href="/post/create" class="btn btn-secondary">글 작성하기</a>
+  </div>
+  <a href="{% url 'account_logout' %}">Logout</a>
+  {% else %}
+  <a href="{% provider_login_url 'google' %}">Google Connect</a>
+  {% endif %}
+</body>
+
 </html>
