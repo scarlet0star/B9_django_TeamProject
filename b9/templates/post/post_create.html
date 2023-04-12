@@ -7,6 +7,9 @@
     <form method="POST" class="post-form my-3" action="/post/create/" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
+
+
+
         <div style="text-align: center">
             <button type="submit" class="btn btn-primary">작성하기</button>
             <a href="/" class="btn btn-secondary">돌아가기</a>
