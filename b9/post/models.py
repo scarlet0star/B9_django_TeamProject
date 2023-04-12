@@ -12,7 +12,7 @@ class PostModel(models.Model):
     title = models.CharField(max_length=20)
     post = models.TextField()
     photo = models.ImageField(blank=True, upload_to="media/%Y/%m/%d")
-    like_users = models.ManyToManyField(User, related_name='like_articles')
+    like_users = models.ManyToManyField(User, related_name='like_posts')
     like_count = models.IntegerField(blank=True, null=True,default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -26,8 +26,8 @@ class Comment(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 
-class Like(models.Model):
-    user = models.ForeignKey(User,on_delete=models.CASCADE)
-    post = models.ForeignKey(PostModel, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)
+    # def __str__(self): 
+    #     return self.name
     
+    
+#asdasd
