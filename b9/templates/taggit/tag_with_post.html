@@ -10,11 +10,11 @@
         <div class="card">
             <div class="card-body">
                 {% for post in object_list %}
-                    <h4>
-                        <a href="/post/{{ post.id }}">{{ post.post }}</a>
-                    </h4>
-                    {{ post.updated_at|timesince}}
-                    <p> {{ post.writer }}</p>
+                    <h3>
+                        <a href="/post/{{ post.id }}">{{ post.title }}</a>
+                    </h3>
+                    <p style="font-size: small">{{ post.updated_at|timesince}} - {{ post.writer.username }}</p>
+                <hr>
                 {% endfor %}
             </div>
         </div>

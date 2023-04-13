@@ -10,11 +10,20 @@ from django.contrib.auth import get_user_model
 from post.models import Post
 from django.views.generic import ListView
 from django.db.models import Q
+from django.core.paginator import Paginator
 # Create your views here.
 
 
 def index(request):
-    return render(request, "user/index.html")
+    post_list = Post.objects.all().order_by('-created_at')
+    # 포스트리스트를 5개씩 나누기
+    paginator = Paginator(post_list, 4)
+    # 페이지에 해당되는 페이지의 번호를 받아오기
+    page = request.GET.get('page')
+    # 페이지 번호를 받아서 해당 페이지 게시글들을 리턴하기
+    posts = paginator.get_page(page)
+    # 받아온 페이지를 render를 통해 넘겨주기
+    return render(request, "user/index.html",{'posts':posts})
 
 
 def user_signup(request):
