@@ -65,7 +65,7 @@ def user_mypage(request, username):
     profile = Profile.objects.get(user=user)
     all_mypost = Post.objects.filter(writer=username).order_by('-created_at')
     # likes = Like.objects.filter(user=username)
-    return render(request, 'user/mypage.html', {'profile': profile, 'posts': all_mypost,})
+    return render(request, 'user/mypage.html', {'profile': profile, 'posts': all_mypost, })
 
 
 @login_required
@@ -110,11 +110,11 @@ class UserList(ListView):
     model = get_user_model()
     template_name = 'user/user_list.html'
     context_object_name = 'users'
-    paginate_by = 10
+    paginate_by = 3
 
     def get_queryset(self):
         query = self.request.GET.get('query', '')
-        search_by = self.request.GET.get('search_by', 'author')
+        search_by = self.request.GET.get('search_by', 'ID')
 
         if query:
             if search_by == 'ID':
@@ -124,3 +124,9 @@ class UserList(ListView):
                 return self.model.objects.filter(Q(first_name__icontains=query) | Q(last_name__icontains=query))
         else:
             return self.model.objects.none()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['query'] = self.request.GET.get('query', '')
+        context['search_by'] = self.request.GET.get('search_by', 'ID')
+        return context
