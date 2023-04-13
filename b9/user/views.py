@@ -7,7 +7,7 @@ from .models import Profile
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
-from post.models import Post, Like
+from post.models import Post
 from django.views.generic import ListView
 from django.db.models import Q
 # Create your views here.
@@ -60,12 +60,12 @@ def user_logout(request):
 
 
 @login_required
-def user_mypage(request,username):
+def user_mypage(request, username):
     user = get_object_or_404(get_user_model(), username=username)
     profile = Profile.objects.get(user=user)
     all_mypost = Post.objects.filter(writer=username).order_by('-created_at')
-    likes = Like.objects.filter(user=username)
-    return render(request, 'user/mypage.html', {'profile': profile, 'posts': all_mypost, 'likes':likes})
+    # likes = Like.objects.filter(user=username)
+    return render(request, 'user/mypage.html', {'profile': profile, 'posts': all_mypost,})
 
 
 @login_required
