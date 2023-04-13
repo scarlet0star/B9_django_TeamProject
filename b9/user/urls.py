@@ -12,8 +12,8 @@ urlpatterns = [
     path('login/',views.user_login,name='login'),
     path('logout/',views.user_logout,name='logout'),
     path('follows/',views.follow_list,name='follow'),
-    path('follow/@<str:username>',views.add_or_sub_follower,name='following'),
-    path('mypage/update', views.user_mypage_update, name='mypage-update'),
-    path('mypage/<str:username>', views.user_mypage, name='mypage'),
-    path('user_search/', views.UserList.as_view(), name='user_search'),
+    path('@<str:username>/follow/',views.add_or_sub_follower,name='following'),
+    path('@<str:username>/update/', views.user_mypage_update, name='mypage-update'),
+    path('@<str:username>', views.user_mypage, name='mypage'),
+    path('search/', views.UserList.as_view(), name='search'),
 ]

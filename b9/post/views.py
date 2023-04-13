@@ -86,38 +86,39 @@ class UpdatePost(UpdateView):
 def add_comment(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     if request.method == 'POST':
+        print('post')
         form = CommentForm(request.POST)
         if form.is_valid():
+            print('ok')
             comment = form.save(commit=False)
             comment.author = request.user
             comment.post = post
             comment.save()
-            return redirect('post_detail', post_id=post_id)
-    else:
-        form = CommentForm()
-    return render(request, 'post/detail.html', {'form': form})
+            return redirect('post:detail_post', post_id)
+    return redirect('post:detail_post', post_id)
 
 @login_required
 def edit_comment(request, comment_id):
     comment = get_object_or_404(Comment, id=comment_id)
     if comment.author != request.user:
-        return redirect('post_detail', post_id=comment.post.id)
+        return redirect('post:detail_post', comment.post_id)
     if request.method == 'POST':
         form = CommentForm(request.POST, instance=comment)
         if form.is_valid():
             form.save()
-            return redirect('post_detail', post_id=comment.post.id)
+            return redirect('post:detail_post', comment.post_id)
     else:
         form = CommentForm(instance=comment)
-    return render(request, 'post/detail.html', {'form': form})
+    return redirect('post:detail_post',  comment.post_id)
 
 @login_required
 def delete_comment(request, comment_id):
     comment = get_object_or_404(Comment, id=comment_id)
+    print(comment.post_id)
     if comment.author != request.user:
-        return redirect('post_detail', post_id=comment.post.id)
+        return redirect('post:detail_post', comment.post_id)
     comment.delete()
-    return redirect('post_detail', post_id=comment.post.id)
+    return redirect('post:detail_post', comment.post_id)
 
 @login_required
 def toggle_like(request, post_id):
@@ -149,16 +150,18 @@ def all_delete(request):
 
 
 @login_required
-def detail_post(request, id):
+def detail_post(request, post_id):
     if request.method == 'GET':
         user = request.user.is_authenticated
         if user:
-            post_detail = Post.objects.get(id=id)
+            post_detail = Post.objects.get(id=post_id)
             # all_comment = Comment.
-            return render(request, 'post/detail.html', {'post_detail': post_detail})
+            commentform = CommentForm()
+            all_comment = Comment.objects.filter(post_id=post_id)
+            return render(request, 'post/detail.html', {'post_detail': post_detail,'all_comment':all_comment ,'commentform':commentform})
         else:
             return redirect('login')
     if request.method == 'DELETE':
-        post = Post.objects.get(id=id)
+        post = Post.objects.get(id=post_id)
         post.delete()
         return redirect('/post')
