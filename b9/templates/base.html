@@ -3,18 +3,19 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
 
     <title>{% block title %}{% endblock %} | spartaSNS</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}" />
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}"/>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
-        crossorigin="anonymous"></script>
+            integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+            crossorigin="anonymous"></script>
     <style>
+
         .title-center {
             text-align: center;
             margin-top: 50px;
@@ -39,100 +40,101 @@
 
 <body class="is-preload">
 
-    <!-- Wrapper -->
-        <div id="wrapper">
-				<!-- Header -->
-                <header id="header">
-                    <!-- title -->
-                    <h1><a href="index.html">Future Imperfect</a></h1>
-                    <nav class="links">
-                        {% if not user.is_authenticated %}
-                        <ul>
-                            <li><a href="/user/login">Sign In</li>
-                            <li><a href="/user/signup">Sign Up</li>
-                        </ul>
-                        {% else %}
-                        <ul>
-                            <li><a href="#">{{ user.username }} 님 반갑습니다 !</a></li>
-                            <li><a href="/user/logout">Logout</a></li>
-                        </ul>
-                        {% endif %}
-                    </nav>
-                    <nav class="main">
-                        <ul>
-                            <li class="search">
-                                <a class="fa-search" href="#search">Search</a>
-                                <form id="search" method="get" action="#">
-                                    <input type="text" name="query" placeholder="Search" />
-                                </form>
-                            </li>
-                            <li class="menu">
-                                <a class="fa-bars" href="#menu">Menu</a>
-                            </li>
-                        </ul>
-                    </nav>
-                </header>
+<!-- Wrapper -->
+<div id="wrapper">
+    <!-- Header -->
+    <header id="header">
+        <!-- title -->
+        <h1><a href="index.html">Future Imperfect</a></h1>
+        <nav class="links">
+            {% if not user.is_authenticated %}
+                <ul>
+                    <li><a href="/user/login">Sign In</li>
+                    <li><a href="/user/signup">Sign Up</li>
+                </ul>
+            {% else %}
+                <ul>
+                    <li><a href="#">{{ user.username }} 님 반갑습니다 !</a></li>
+                    <li><a href="/user/logout">Logout</a></li>
+                </ul>
+            {% endif %}
+        </nav>
+        <nav class="main">
+            <ul>
+                <li class="search">
+                    <a class="fa-search" href="#search">Search</a>
+                    <form id="search" method="get" action="#">
+                        <input type="text" name="query" placeholder="Search"/>
+                    </form>
+                </li>
+                <li class="menu">
+                    <a class="fa-bars" href="#menu">Menu</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
 
-				<!-- Menu -->
-                <section id="menu">
+    <!-- Menu -->
+    <section id="menu">
 
-                    <!-- Search -->
-                        <section>
-                            <form method="GET" action="{% url 'user:user_search' %}">
-                                <input type="text" name="query" placeholder="Search" value="{{ request.GET.query }}">
-                                <select name="search_by">
-                                    <option value="ID" {% if request.GET.search_by == 'ID' %}selected{% endif %}>ID</option>
-                                    <option value="first_name" {% if request.GET.search_by == 'first_name' %}selected{% endif %}>이름</option>
-                                </select>
-                                <button type="submit">Search</button>
-                            </form>
-                        </section>
+        <!-- Search -->
+        <section>
+            <form method="GET" action="{% url 'user:user_search' %}">
+                <input type="text" name="query" placeholder="Search" value="{{ request.GET.query }}">
+                <select name="search_by">
+                    <option value="ID" {% if request.GET.search_by == 'ID' %}selected{% endif %}>ID</option>
+                    <option value="first_name" {% if request.GET.search_by == 'first_name' %}selected{% endif %}>이름
+                    </option>
+                </select>
+                <button type="submit">Search</button>
+            </form>
+        </section>
 
-                    <!-- Links -->
-                        <section>
-                            <ul class="links">
-                                <li>
-                                    <a href="#">
-                                        <h3>Lorem ipsum</h3>
-                                        <p>Feugiat tempus veroeros dolor</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <h3>Dolor sit amet</h3>
-                                        <p>Sed vitae justo condimentum</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <h3>Feugiat veroeros</h3>
-                                        <p>Phasellus sed ultricies mi congue</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <h3>Etiam sed consequat</h3>
-                                        <p>Porta lectus amet ultricies</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </section>
+        <!-- Links -->
+        <section>
+            <ul class="links">
+                <li>
+                    <a href="#">
+                        <h3>Lorem ipsum</h3>
+                        <p>Feugiat tempus veroeros dolor</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <h3>Dolor sit amet</h3>
+                        <p>Sed vitae justo condimentum</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <h3>Feugiat veroeros</h3>
+                        <p>Phasellus sed ultricies mi congue</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <h3>Etiam sed consequat</h3>
+                        <p>Porta lectus amet ultricies</p>
+                    </a>
+                </li>
+            </ul>
+        </section>
 
-                    <!-- Actions -->
-                        <section>
-                            <ul class="actions stacked">
-                                <li><a href="#" class="button large fit">Log In</a></li>
-                            </ul>
-                        </section>
+        <!-- Actions -->
+        <section>
+            <ul class="actions stacked">
+                <li><a href="#" class="button large fit">Log In</a></li>
+            </ul>
+        </section>
 
-                </section>
+    </section>
 
     {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-        {% endfor %}
-    </ul>
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
     {% endif %}
 
 
@@ -142,14 +144,13 @@
     {% endblock %}
 
 
-
 </div>
-    <!-- Scripts -->
-        <script src="{% static 'assets/js/jquery.min.js' %}"></script>
-        <script src="{% static 'assets/js/browser.min.js' %}"></script>
-        <script src="{% static 'assets/js/breakpoints.min.js' %}"></script>
-        <script src="{% static 'assets/js/util.js' %}"></script>
-        <script src="{% static 'assets/js/main.js' %}"></script>
+<!-- Scripts -->
+<script src="{% static 'assets/js/jquery.min.js' %}"></script>
+<script src="{% static 'assets/js/browser.min.js' %}"></script>
+<script src="{% static 'assets/js/breakpoints.min.js' %}"></script>
+<script src="{% static 'assets/js/util.js' %}"></script>
+<script src="{% static 'assets/js/main.js' %}"></script>
 
 </body>
 
