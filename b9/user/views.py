@@ -14,7 +14,7 @@ from django.db.models import Q
 
 
 def index(request):
-    return render(request, "user/user.html")
+    return render(request, "user/index.html")
 
 
 def user_signup(request):
