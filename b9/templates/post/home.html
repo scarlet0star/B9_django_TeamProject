@@ -43,14 +43,14 @@
                                         {% if post.tags.all %}
                                             {% for tag in post.tags.all %}
                                                 <a style="text-decoration: none"
-                                                   href="{% url 'tagged_object_list' tag.name %}">
+                                                   href="{% url 'post:tagged_object_list' tag.name %}">
                                                         <span class="badge rounded-pill bg-success">
                                                             {{ tag.name }}
                                                         </span>
                                                 </a>
                                             {% endfor %}
                                             -<a style="text-decoration: none"
-                                                href="{% url 'tag_cloud' %}">TagCloud</a>
+                                                href="{% url 'post:tag_cloud' %}">TagCloud</a>
                                         {% endif %}
                                     </div>
                                     {% if post.writer == user.id %}

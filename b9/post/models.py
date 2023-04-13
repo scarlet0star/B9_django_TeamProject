@@ -20,7 +20,7 @@ class Post(models.Model):
     
 
 class Comment(models.Model):
-    contant = models.TextField()
+    content = models.TextField("댓글 작성")
     author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
