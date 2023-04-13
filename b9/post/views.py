@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Post, Comment, Like
+from .models import Post, Comment
 from user.models import Profile, User
 from .forms import PostForm, CommentForm
 
