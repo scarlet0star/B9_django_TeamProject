@@ -38,7 +38,7 @@
                 {% if post.photo %}
                     <a href=" " class="image featured"><img src="{{ post.photo.url }}" alt=""/></a>
                 {% endif %}
-                <p>{{ post.post }}</p>
+                <p>{{ post.post|safe }}</p>
                 <footer>
                             <ul class="actions">
                                 <li><a href="/post/{{ post.id }}" class="button large">Continue Reading</a></li>
