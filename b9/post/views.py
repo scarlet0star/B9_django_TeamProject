@@ -36,7 +36,7 @@ def post_create(request):
                 if tag != '':
                     post.tags.add(tag)
             post.save()
-            return redirect('/post')
+            return redirect('/user')
     if request.method == 'GET':
         form = PostForm()
     return render(request, 'post/post_create.html', {'form': form})
@@ -133,7 +133,7 @@ def toggle_like(request, post_id):
             post.like_users.add(user)
             post.like_count += 1
             post.save()
-        return redirect('/post')
+        return redirect('/user')
     return redirect('/user/login')
 
 
@@ -144,9 +144,6 @@ def toggle_like(request, post_id):
 #     context = {'likes':likes}
 #     return render(request, 'post/like_notifications.html', context)
 
-def all_delete(request):
-    Post.objects.all().delete()
-    return redirect('/post')
 
 
 @login_required
@@ -164,18 +161,7 @@ def detail_post(request, post_id):
     if request.method == 'DELETE':
         post = Post.objects.get(id=post_id)
         post.delete()
-        return redirect('/post')
-
-# 페이지 검색 기능
-
-
-def search(request):
-    searched = request.GET.get('postsearched', '')
-    posts = Post.objects.filter(Q(title__icontains=searched) |
-                                Q(post__icontains=searched)
-                                ).distinct().order_by('-created_at')
-    return render(request, 'post/post_searched.html', {'searched': searched, 'posts_searched': posts})
-
+        return redirect('/user')
 
 class PostList(ListView):
     model = Post
