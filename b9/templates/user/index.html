@@ -11,70 +11,88 @@
 
     <!-- Main -->
     <div id="main">
-        <!-- Post -->
-        {% for post in posts %}
-            <article class="post">
-                <header>
-                    <div class="title">
-                        <h2>{{ post.title }}</h2>
-                        {% if post.tags.all %}
-                            {% for tag in post.tags.all %}
-                                <a style="font-size: small"
-                                   href="{% url 'post:tagged_object_list' tag.name %}">
-                                    <span> #{{ tag.name }}&nbsp; </span>
-                                </a>
-                            {% endfor %}
-                            -<a style="font-size: small"
-                                href="{% url 'post:tag_cloud' %}">TagCloud</a>
-                        {% endif %}
-                    </div>
-                    <div class="meta">
-                        <time class="published" datetime="{{ post.created_at }}">{{ post.created_at|timesince }}
-                            전
-                        </time>
-                        <a href="#" class="author"><span class="name">{{ post.writer.username }}</span></a>
-                    </div>
-                </header>
-                {% if post.photo %}
-                    <a href=" " class="image featured"><img src="{{ post.photo.url }}" alt=""/></a>
-                {% endif %}
-                <p>{{ post.post }}</p>
-                <footer>
-                            <ul class="actions">
-                                <li><a href="/post/{{ post.id }}" class="button large">Continue Reading</a></li>
-                            </ul>
-                            <ul class="stats">
-                                <li><a href="#">General</a></li>
-                                {% if user in post.like_users.all %}
-                                    <li><a href="/post/{{ post.id }}/like/"
-                                           class="icon solid fa-heart" style="color:#ff00a0">{{ post.like_count }}</a></li>
-                                {% else %}
-                                    <li><a href="/post/{{ post.id }}/like/"
-                                           class="icon solid fa-heart" style="color: rgba(160, 160, 160, 0.5);">{{ post.like_count }}</a></li>
-                                {% endif %}
-                                <li><a href="#" class="icon solid fa-comment" style="color: rgba(160, 160, 160, 0.5);">128</a></li>
-                            </ul>
-                        </footer>
-            </article>
-        {% endfor %}
-        <!-- Pagination -->
-        <ul class="actions pagination">
-            {#             만약 현재 페이지보다 이전 페이지가 존재 한다면#}
-            {% if posts.has_previous %}
-                {#                    바로 전 페이지로 이동하기#}
-                <li><a href="?page={{ posts.previous_page_number }}" class="button large previous">Previous
-                    Page</a></li>
-            {% else %}
-                <li><a href=" " class="disabled button large previous">Previous Page</a></li>
-            {% endif %}
-            {#            만약 다음 페이지가 존재 한다면#}
-            {% if posts.has_next %}
-                {#                    바로 다음 페이지로 이동하기#}
-                <li><a href="?page={{ posts.next_page_number }}" class="button large next">Next Page</a></li>
-            {% else %}
-                <li><a href=" " class="disabled button large next">Next Page</a></li>
-            {% endif %}
+
+        <!-- 포스트 검색기능-->
+        <ul class="search" >
+            <form  method="GET" action="{% url 'post:post_searched' %}" name="flexForm">
+                <input  type="text" name="query" placeholder="PostSearch"
+                       value="{{ request.GET.query }}">
+                <button type="submit">Post Search</button>
+            </form>
         </ul>
+        <ul>
+            <!-- Post -->
+            {% for post in posts %}
+                <article class="post">
+                    <header>
+                        <div class="title">
+                            <h2>{{ post.title }}</h2>
+                            {% if post.tags.all %}
+                                {% for tag in post.tags.all %}
+                                    <a style="font-size: small"
+                                       href="{% url 'post:tagged_object_list' tag.name %}">
+                                        <span> #{{ tag.name }}&nbsp; </span>
+                                    </a>
+                                {% endfor %}
+                                -<a style="font-size: small"
+                                    href="{% url 'post:tag_cloud' %}">TagCloud</a>
+                            {% endif %}
+                        </div>
+                        <div class="meta">
+                            <time class="published" datetime="{{ post.created_at }}">{{ post.created_at|timesince }}
+                                전
+                            </time>
+                            <a href="#" class="author"><span class="name">{{ post.writer.username }}</span></a>
+                        </div>
+                    </header>
+                    {% if post.photo %}
+                        <a href=" " class="image featured"><img src="{{ post.photo.url }}" alt=""/></a>
+                    {% endif %}
+                    <p>{{ post.post }}</p>
+                    <footer>
+                        <ul class="actions">
+                            <li><a href="/post/{{ post.id }}" class="button large">Continue Reading</a></li>
+                        </ul>
+                        <ul class="stats">
+                            {#                    작성자에게만 보이는 수정하기#}
+                            {% if post.writer_id == user.username %}
+                                <li><a href="/post/{{ post.id }}/update">수정하기</a></li>
+                            {% endif %}
+                            {#                    좋아요를 누른 사람이라면 분홍색 하트#}
+                            {% if user in post.like_users.all %}
+                                <li><a href="/post/{{ post.id }}/like/"
+                                       class="icon solid fa-heart" style="color:#ff00a0">{{ post.like_count }}</a>
+                                </li>
+                            {% else %}
+                                <li><a href="/post/{{ post.id }}/like/"
+                                       class="icon solid fa-heart"
+                                       style="color: rgba(160, 160, 160, 0.5);">{{ post.like_count }}</a></li>
+                            {% endif %}
+                            <li><a href="#" class="icon solid fa-comment"
+                                   style="color: rgba(160, 160, 160, 0.5);">128</a>
+                            </li>
+                        </ul>
+                    </footer>
+                </article>
+            {% endfor %}
+            <!-- Pagination -->
+            <ul class="actions pagination">
+                {#             만약 현재 페이지보다 이전 페이지가 존재 한다면#}
+                {% if posts.has_previous %}
+                    {#                    바로 전 페이지로 이동하기#}
+                    <li><a href="?page={{ posts.previous_page_number }}" class="button large previous">Previous
+                        Page</a></li>
+                {% else %}
+                    <li><a href=" " class="disabled button large previous">Previous Page</a></li>
+                {% endif %}
+                {#            만약 다음 페이지가 존재 한다면#}
+                {% if posts.has_next %}
+                    {#                    바로 다음 페이지로 이동하기#}
+                    <li><a href="?page={{ posts.next_page_number }}" class="button large next">Next Page</a></li>
+                {% else %}
+                    <li><a href=" " class="disabled button large next">Next Page</a></li>
+                {% endif %}
+            </ul>
 
     </div>
     <!-- Sidebar -->
@@ -87,31 +105,35 @@
                 <h2>Future Imperfect</h2>
                 <p>Another fine responsive site template by <a href="http://html5up.net">HTML5 UP</a></p>
             </header>
+           <a href="{% url "post:post_create" %}" class="button large next">글 작성하기</a>
         </section>
-         
+
         <!-- Mini Posts -->
-        <section> 
+        <section>
             <div class="mini-posts">
                 <!-- Mini Post -->
                 <p>팔로워들의 포스트</p>
                 {% for post in followings %}
-                <article class="mini-post">
-                    <header>
-                        <h3><a href="{% url 'post:detail_post' post.id %}">{{ post.title }}</a></h3>
-                        <time class="published" datetime="{{ post.created_at|date:'c' }}">{{ post.created_at|date:"F d, Y" }}</time>
-                        <p>{{post.writer}}</p>
-                        {% if post.author.profile.profile_image %}
-                            <a href="#" class="author"><img src="{{ post.author.profile.profile_image.url }}" alt="" /></a>
-                        {% else %}
-                            <a href="#" class="author"><img src="images/avatar.jpg" alt="" /></a>
+                    <article class="mini-post">
+                        <header>
+                            <h3><a href="{% url 'post:detail_post' post.id %}">{{ post.title }}</a></h3>
+                            <time class="published" datetime="{{ post.created_at|date:'c' }}">
+                                {{ post.created_at|date:"F d, Y" }}</time>
+                            <p>{{ post.writer }}</p>
+                            {% if post.author.profile.profile_image %}
+                                <a href="#" class="author"><img src="{{ post.author.profile.profile_image.url }}"
+                                                                alt=""/></a>
+                            {% else %}
+                                <a href="#" class="author"><img src="images/avatar.jpg" alt=""/></a>
+                            {% endif %}
+                        </header>
+                        {% if post.photo %}
+                            <a href="{% url 'post:detail_post' post.id %}" class="image"><img src="{{ post.photo.url }}"
+                                                                                              alt=""/></a>
                         {% endif %}
-                    </header>
-                    {% if post.photo %}
-                        <a href="{% url 'post:detail_post' post.id %}" class="image"><img src="{{ post.photo.url }}" alt="" /></a>
-                    {% endif %}
-                </article>        
-                {% empty %}
-                <p>팔로잉한 사용자의 게시물이 없습니다.</p>
+                    </article>
+                    {% empty %}
+                    <p>팔로잉한 사용자의 게시물이 없습니다.</p>
                 {% endfor %}
             </div>
         </section>

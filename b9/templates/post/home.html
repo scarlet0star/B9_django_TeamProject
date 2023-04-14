@@ -71,10 +71,12 @@
                         <p>{{ post.post|safe }}</p>
                         <footer>
                             <ul class="actions">
-                                <li><a href="/post/{{ post.id }}" class="button large">댓글 작성하기</a></li>
+                                <li><a href="/post/{{ post.id }}" class="button large">Continue Reading</a></li>
                             </ul>
                             <ul class="stats">
+                            {% if post.writer == user.id %}
                                 <li><a href="#">General</a></li>
+                            {% endif %}
                                 {% if user in post.like_users.all %}
                                     <li><a href="/post/{{ post.id }}/like/"
                                            class="icon solid fa-heart" style="color:#ff00a0">{{ post.like_count }}</a>
