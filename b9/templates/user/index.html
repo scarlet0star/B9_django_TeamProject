@@ -93,6 +93,7 @@
         <section> 
             <div class="mini-posts">
                 <!-- Mini Post -->
+                {% if not request.user.authenticated %}
                 <p>팔로워들의 포스트</p>
                 {% for post in followings %}
                 <article class="mini-post">
@@ -113,6 +114,8 @@
                 {% empty %}
                 <p>팔로잉한 사용자의 게시물이 없습니다.</p>
                 {% endfor %}
+                {%else%}
+                {%endif%}
             </div>
         </section>
 
