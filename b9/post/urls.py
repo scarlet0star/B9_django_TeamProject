@@ -16,5 +16,7 @@ urlpatterns = [
     path('tag/', views.TagCloudTV.as_view(), name='tag_cloud'),
     # 태그 내 문자열로 들어가면
     path('tag/<str:tag>/', views.TaggedObjectLV.as_view(), name='tagged_object_list'),
+    # 페이지 검색 기능
+    path('search/',views.PostList.as_view(), name='post_searched')
     # path('like_notifications/', views.like_notifications, name='like_notifications'),
 ]

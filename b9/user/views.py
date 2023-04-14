@@ -129,10 +129,9 @@ class UserList(ListView):
             if search_by == 'ID':
                 return self.model.objects.filter(username__icontains=query)
             elif search_by == 'first_name':
-
                 return self.model.objects.filter(Q(first_name__icontains=query) | Q(last_name__icontains=query))
-        else:
-            return self.model.objects.none()
+            else:
+                return self.model.objects.none()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

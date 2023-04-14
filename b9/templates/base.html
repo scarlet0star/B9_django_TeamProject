@@ -79,7 +79,7 @@
 
         <!-- Search -->
         <section>
-            <form method="GET" action="{% url 'user:user_search' %}">
+            <form method="GET" action="{% url 'user:search' %}">
                 <input type="text" name="query" placeholder="Search" value="{{ request.GET.query }}">
                 <select name="search_by">
                     <option value="ID" {% if request.GET.search_by == 'ID' %}selected{% endif %}>ID</option>

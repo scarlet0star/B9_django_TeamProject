@@ -31,6 +31,13 @@
             {% endif %}
             <!-- 오른 쪽 컬럼-->
             <div class="col-md-7">
+            <!-- 포스트 검색기능-->
+                <section>
+                    <form method="GET" action="{% url 'post:post_searched' %}">
+                        <input type="text" name="query" placeholder="PostSearch" value="{{ request.GET.query }}">
+                        <button type="submit">Post Search</button>
+                    </form>
+                </section>
                 <hr>
                 <!-- 작성 된 글이 나오는 곳 -->
                 {% for post in posts %}
@@ -42,7 +49,7 @@
                                     {% for tag in post.tags.all %}
                                         <a style="font-size: small"
                                            href="{% url 'post:tagged_object_list' tag.name %}">
-                                            <span> #{{ tag.name }} </span>
+                                            <span> #{{ tag.name }}&nbsp; </span>
 
                                         </a>
                                     {% endfor %}
@@ -70,12 +77,15 @@
                                 <li><a href="#">General</a></li>
                                 {% if user in post.like_users.all %}
                                     <li><a href="/post/{{ post.id }}/like/"
-                                           class="icon solid fa-heart" style="color:#ff00a0">{{ post.like_count }}</a></li>
+                                           class="icon solid fa-heart" style="color:#ff00a0">{{ post.like_count }}</a>
+                                    </li>
                                 {% else %}
                                     <li><a href="/post/{{ post.id }}/like/"
-                                           class="icon solid fa-heart" style="color: rgba(160, 160, 160, 0.5);">{{ post.like_count }}</a></li>
+                                           class="icon solid fa-heart"
+                                           style="color: rgba(160, 160, 160, 0.5);">{{ post.like_count }}</a></li>
                                 {% endif %}
-                                <li><a href="#" class="icon solid fa-comment" style="color: rgba(160, 160, 160, 0.5);">128</a></li>
+                                <li><a href="#" class="icon solid fa-comment" style="color: rgba(160, 160, 160, 0.5);">128</a>
+                                </li>
                             </ul>
                         </footer>
                     </article>

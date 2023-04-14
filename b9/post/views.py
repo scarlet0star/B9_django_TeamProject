@@ -9,6 +9,7 @@ from django.views.generic import UpdateView
 from django.urls import reverse_lazy
 from django.core.paginator import Paginator
 from django.views.generic import ListView, TemplateView
+from django.db.models import Q
 # Create your views here.
 
 # 메인 페이지
@@ -17,7 +18,7 @@ from django.views.generic import ListView, TemplateView
 def home(request):
     post_list = Post.objects.all().order_by('-created_at')
     # 포스트리스트를 5개씩 나누기
-    paginator = Paginator(post_list, 4)
+    paginator = Paginator(post_list, 3)
     # 페이지에 해당되는 페이지의 번호를 받아오기
     page = request.GET.get('page')
     # 페이지 번호를 받아서 해당 페이지 게시글들을 리턴하기
@@ -165,3 +166,32 @@ def detail_post(request, post_id):
         post = Post.objects.get(id=post_id)
         post.delete()
         return redirect('/post')
+
+
+# 페이지 검색 기능
+def search(request):
+    searched = request.GET.get('postsearched', '')
+    posts = Post.objects.filter(Q(title__icontains=searched)|
+                                Q(post__icontains=searched)
+                                ).distinct().order_by('-created_at')
+    return render(request, 'post/post_searched.html', {'searched':searched,'posts_searched':posts})
+
+class PostList(ListView):
+    model = Post
+    template_name = 'post/post_searched.html'
+    context_object_name = 'posts_searched'
+    paginate_by = 3
+
+    def get_queryset(self):
+        query = self.request.GET.get('query', '')
+        if query:
+            return self.model.objects.filter(Q(title__icontains=query)|
+                                Q(post__icontains=query)
+                                ).distinct().order_by('-created_at')
+        else:
+            return self.model.objects.none()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['query'] = self.request.GET.get('query', '')
+        return context
