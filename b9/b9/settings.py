@@ -32,9 +32,11 @@ INSTALLED_APPS = [
     # 생성 앱
     "user",
     "post",
-# 태그 앱
+    # 태그 앱
     'taggit.apps.TaggitAppConfig',
     'taggit_templatetags2',
+    # 에디터 앱
+    'django_summernote',
 ]
 TAGGIT_CASE_INSENSITIVE = True
 TAGGIT_LIMIT = 50
@@ -119,7 +121,8 @@ USE_TZ = True
 STATIC_URL = "/static/"
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'user', 'static')
+    os.path.join(BASE_DIR, 'user', 'static'),
+    os.path.join(BASE_DIR, 'django_summernote', 'static', 'django_summernote'),
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')

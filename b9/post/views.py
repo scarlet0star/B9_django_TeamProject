@@ -86,10 +86,8 @@ class UpdatePost(UpdateView):
 def add_comment(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     if request.method == 'POST':
-        print('post')
         form = CommentForm(request.POST)
         if form.is_valid():
-            print('ok')
             comment = form.save(commit=False)
             comment.author = request.user
             comment.post = post
@@ -100,11 +98,15 @@ def add_comment(request, post_id):
 @login_required
 def edit_comment(request, comment_id):
     comment = get_object_or_404(Comment, id=comment_id)
+    print(comment)
     if comment.author != request.user:
         return redirect('post:detail_post', comment.post_id)
     if request.method == 'POST':
         form = CommentForm(request.POST, instance=comment)
+        print(form.fields['content'])
+        print(form.errors)
         if form.is_valid():
+            print('valid')
             form.save()
             return redirect('post:detail_post', comment.post_id)
     else:
