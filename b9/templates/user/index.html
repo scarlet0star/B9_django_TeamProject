@@ -41,7 +41,7 @@
                             <time class="published" datetime="{{ post.created_at }}">{{ post.created_at|timesince }}
                                 전
                             </time>
-                            <a href="#" class="author"><span class="name">{{ post.writer.username }}</span></a>
+                            <a href="{% url 'user:mypage' post.writer.username %}" class="author"><span class="name">{{ post.writer.username }}</span></a>
                         </div>
                     </header>
                     {% if post.photo %}
@@ -67,7 +67,7 @@
                                        class="icon solid fa-heart"
                                        style="color: rgba(160, 160, 160, 0.5);">{{ post.like_count }}</a></li>
                             {% endif %}
-                            <li><a href="#" class="icon solid fa-comment"
+                            <li><a href="/post/{{ post.id }}" class="icon solid fa-comment"
                                    style="color: rgba(160, 160, 160, 0.5);">128</a>
                             </li>
                         </ul>
