@@ -109,7 +109,7 @@ def user_mypage_update(request, username):
             form.save()
             profileform.save()
             messages.success(request, '프로필이 업데이트 되었습니다!')
-            return redirect('/user/mypage')
+            return redirect('user:mypage', username=username)
     else:
         user_form = UserUpdateForm(instance=request.user)
         profile_form = ProfileForm(instance=request.user.profile)

@@ -1,53 +1,44 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Mypage 수정
+  Mypage 수정
 {% endblock %}
 
-
 {% block content %}
-
-<br>
-<div class="container">
+  <br />
+  <div class="container">
     <h1>마이페이지 수정</h1>
     <div class="wrap">
-        <h2 class="my-4">회원 정보 수정</h2>
-        <form method="post" action="" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="row mb-3">
-                <div class="col">
-                <label for="{{ form.first_name.id_for_label }}" class="form-label">First name</label>
-                <input type="text" class="form-control" id="{{ form.first_name.id_for_label }}"
-                       name="{{ form.first_name.html_name }}" value="{{user.first_name}}" required>
-                </div>
-                <div class="col">
-                <label for="{{ form.last_name.id_for_label }}" class="form-label">Last name</label>
-                <input type="text" class="form-control" id="{{ form.last_name.id_for_label }}"
-                       name="{{ form.last_name.html_name }}" value="{{user.last_name}}" required>
-                </div>
-              </div>
-            <div class="mb-3">
-                <label for="{{ profileform.profile_image.id_for_label }}" class="form-label">프로필 이미지</label>
-                <input type="file" class="form-control" id="{{ profileform.profile_image.id_for_label }}"
-                       name="{{ profileform.profile_image.html_name }}"  >
-            </div>
-            <div class="mb-3">
-                <label for="{{ profileform.subscript.id_for_label }}" class="form-label">내 소개</label>
-                <textarea type="text" class="form-control" id="{{ profileform.subscript.id_for_label }}"
-                       name="{{ profileform.subscript.html_name }}"  >{{ user.profile.subscript}}</textarea>
-            </div>
-            <div class="mb-3">
-                <label for="{{ form.email.id_for_label }}" class="form-label">이메일 주소</label>
-                <input type="email" class="form-control" id="{{ form.email.id_for_label }}"
-                       name="{{ form.email.html_name }}" value="{{user.email}}" required>
-            </div>
-            
-            <button type="submit" class="btn btn-primary">수정하기</button>
-            
-            <a type="button" class="btn btn-primary" href="/">메인 페이지로</a>
-        </form>
+      <h2 class="my-4">회원 정보 수정</h2>
+      <form method="post" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row mb-3">
+          <div class="col">
+            <label for="{{ form.first_name.id_for_label }}" class="form-label">First name</label>
+            <input type="text" class="form-control" id="{{ form.first_name.id_for_label }}" name="{{ form.first_name.html_name }}" value="{{ user.first_name }}" required />
+          </div>
+          <div class="col">
+            <label for="{{ form.last_name.id_for_label }}" class="form-label">Last name</label>
+            <input type="text" class="form-control" id="{{ form.last_name.id_for_label }}" name="{{ form.last_name.html_name }}" value="{{ user.last_name }}" required />
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="{{ profileform.profile_image.id_for_label }}" class="form-label">프로필 이미지</label>
+          <input type="file" class="form-control" id="{{ profileform.profile_image.id_for_label }}" name="{{ profileform.profile_image.html_name }}" />
+        </div>
+        <div class="mb-3">
+          <label for="{{ profileform.subscript.id_for_label }}" class="form-label">내 소개</label>
+          <textarea type="text" class="form-control" id="{{ profileform.subscript.id_for_label }}" name="{{ profileform.subscript.html_name }}">{{ user.profile.subscript }}</textarea>
+        </div>
+        <div class="mb-3">
+          <label for="{{ form.email.id_for_label }}" class="form-label">이메일 주소</label>
+          <input type="email" class="form-control" id="{{ form.email.id_for_label }}" name="{{ form.email.html_name }}" value="{{ user.email }}" required />
+        </div>
+
+        <button type="submit" class="btn btn-primary">수정하기</button>
+
+        <a type="button" class="btn btn-primary" href="/">메인 페이지로</a>
+      </form>
     </div>
-</div>
-
-
+  </div>
 {% endblock %}
