@@ -18,8 +18,7 @@
                         {% else %}
                             <img src="{% static 'default_profile_image.jpg' %}" alt="기본 프로필 이미지" style="width:100%">
                         {% endif %}
-                        {% comment %}<a href="{% url 'profile_image_update' %}" class="btn btn-primary mt-3">프로필 이미지
-                            변경</a> {% endcomment %}
+          
                     </div>
                 </div>
                 <div class="card mt-4">
@@ -39,7 +38,7 @@
                             <h5>회원 정보 수정</h5>
                         </div>
                         <div class="card-body">
-                            <a href="/user/mypage/update" class="btn btn-primary">수정하기</a>
+                            <a type="button" class="btn btn-primary" href="/user/@{{ user.username }}/update/">수정하기</a>
                         </div>
                     </div>
                 {% endif %}
@@ -117,10 +116,6 @@
                 </ul>
             </div>
         </div>
-
     </div>
-    </div>
-    {% endfor %}
-</div>
 {% endblock %}
-{% comment %} 지워주세요 {% endcomment %}
+

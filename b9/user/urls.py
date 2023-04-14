@@ -17,4 +17,5 @@ urlpatterns = [
     path('@<str:username>/update/', views.user_mypage_update, name='mypage-update'),
     path('@<str:username>/', views.user_mypage, name='mypage'),
     path('search/', views.UserList.as_view(), name='search'),
+    # path('search/', views.UserList.as_view(), name='search'),
 ]
