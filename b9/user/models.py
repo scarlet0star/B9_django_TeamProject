@@ -29,4 +29,7 @@ class Follow(models.Model):
 
     def __str__(self):
         return f'{self.follower} 팔로우-> {self.followee}'
+    
+    def is_following(self, target_profile):
+        return self.following.filter(followee=target_profile).exists()
 

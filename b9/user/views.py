@@ -22,8 +22,25 @@ def index(request):
     page = request.GET.get('page')
     # 페이지 번호를 받아서 해당 페이지 게시글들을 리턴하기
     posts = paginator.get_page(page)
-    # 받아온 페이지를 render를 통해 넘겨주기
-    return render(request, "user/index.html",{'posts':posts})
+
+    # FollowerPostList의 로직을 추가
+    user = request.user
+    if user.is_authenticated:
+        following_users = user.profile.follows.all()
+        print(following_users)
+        if following_users:
+            following_ids = [u.user.pk for u in following_users]
+            followings = Post.objects.filter(writer__in=following_ids)
+        else:
+            followings = Post.objects.none()
+    else:
+        followings = []
+    context = {
+        'posts': posts,
+        'followings': followings.order_by('-created_at'),
+    }
+
+    return render(request, "user/index.html", context)
 
 
 def user_signup(request):
@@ -78,7 +95,7 @@ def user_mypage(request, username):
 
 
 @login_required
-def user_mypage_update(request):
+def user_mypage_update(request, username):
     if request.method == 'POST':
         form = UserUpdateForm(request.POST, instance=request.user)
         profileform = ProfileForm(
@@ -129,7 +146,6 @@ class UserList(ListView):
             if search_by == 'ID':
                 return self.model.objects.filter(username__icontains=query)
             elif search_by == 'first_name':
-
                 return self.model.objects.filter(Q(first_name__icontains=query) | Q(last_name__icontains=query))
         else:
             return self.model.objects.none()
@@ -138,4 +154,5 @@ class UserList(ListView):
         context = super().get_context_data(**kwargs)
         context['query'] = self.request.GET.get('query', '')
         context['search_by'] = self.request.GET.get('search_by', 'ID')
+
         return context
