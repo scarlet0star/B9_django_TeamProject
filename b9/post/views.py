@@ -3,7 +3,6 @@ from django.contrib.auth.decorators import login_required
 from .models import Post, Comment
 from user.models import Profile, User
 from .forms import PostForm, CommentForm
-
 from django.http import HttpResponse
 from django.views.generic import UpdateView
 from django.urls import reverse_lazy
@@ -23,9 +22,11 @@ def home(request):
     # 페이지 번호를 받아서 해당 페이지 게시글들을 리턴하기
     posts = paginator.get_page(page)
     # 받아온 페이지를 render를 통해 넘겨주기
-    return render (request, 'post/home.html', {'posts': posts})
+    return render(request, 'post/home.html', {'posts': posts})
 
 # 글 작성 view
+
+
 @login_required
 def post_create(request):
     if request.method == 'POST':
@@ -50,10 +51,13 @@ def post_create(request):
         form = PostForm()
     return render(request, 'post/post_create.html', {'form': form})
 
+
 class TagCloudTV(TemplateView):
     template_name = 'taggit/tag_cloud_view.html'
 
 # 태그가 있으면 태그를 보여주겠다.
+
+
 class TaggedObjectLV(ListView):
     template_name = 'taggit/tag_with_post.html'
     model = Post
@@ -65,6 +69,7 @@ class TaggedObjectLV(ListView):
         context = super().get_context_data(**kwargs)
         context['tagname'] = self.kwargs['tag']
         return context
+
 
 class UpdatePost(UpdateView):
     model = Post
@@ -81,7 +86,7 @@ class UpdatePost(UpdateView):
         return context
 
 
-## sdfsdf
+# sdfsdf
 @login_required
 def add_comment(request, post_id):
     post = get_object_or_404(Post, id=post_id)
@@ -97,6 +102,7 @@ def add_comment(request, post_id):
             return redirect('post:detail_post', post_id)
     return redirect('post:detail_post', post_id)
 
+
 @login_required
 def edit_comment(request, comment_id):
     comment = get_object_or_404(Comment, id=comment_id)
@@ -111,6 +117,7 @@ def edit_comment(request, comment_id):
         form = CommentForm(instance=comment)
     return redirect('post:detail_post',  comment.post_id)
 
+
 @login_required
 def delete_comment(request, comment_id):
     comment = get_object_or_404(Comment, id=comment_id)
@@ -119,6 +126,7 @@ def delete_comment(request, comment_id):
         return redirect('post:detail_post', comment.post_id)
     comment.delete()
     return redirect('post:detail_post', comment.post_id)
+
 
 @login_required
 def toggle_like(request, post_id):
@@ -158,7 +166,7 @@ def detail_post(request, post_id):
             # all_comment = Comment.
             commentform = CommentForm()
             all_comment = Comment.objects.filter(post_id=post_id)
-            return render(request, 'post/detail.html', {'post_detail': post_detail,'all_comment':all_comment ,'commentform':commentform})
+            return render(request, 'post/detail.html', {'post_detail': post_detail, 'all_comment': all_comment, 'commentform': commentform})
         else:
             return redirect('login')
     if request.method == 'DELETE':
