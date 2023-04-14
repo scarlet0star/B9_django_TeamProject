@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}태그 글 리스트{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <h3 class="mt-2">Posts for tag - {{ tagname }}</h3>
+        <hr>
+        <div class="card">
+            <div class="card-body">
+                {% for post in object_list %}
+                    <h3>
+                        <a href="/post/{{ post.id }}">{{ post.title }}</a>
+                    </h3>
+                    <p style="font-size: small">{{ post.updated_at|timesince}} - {{ post.writer.username }}</p>
+                <hr>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

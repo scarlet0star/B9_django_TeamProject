@@ -32,7 +32,14 @@ INSTALLED_APPS = [
     # 생성 앱
     "user",
     "post",
+    # 태그 앱
+    'taggit.apps.TaggitAppConfig',
+    'taggit_templatetags2',
+    # 에디터 앱
+    'django_summernote',
 ]
+TAGGIT_CASE_INSENSITIVE = True
+TAGGIT_LIMIT = 50
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -111,7 +118,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'user', 'static'),
+    os.path.join(BASE_DIR, 'django_summernote', 'static', 'django_summernote'),
+]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 

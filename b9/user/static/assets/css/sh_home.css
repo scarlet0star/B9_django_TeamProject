@@ -1,0 +1,216 @@
+@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@100;200;300;400;500;600;700;800&display=swap');
+
+/* --------------------------------------------- */
+
+/* 1. home.html의 #Codeshare 메인폰트입니다*/
+.sh_title_font {
+    font-family: 'Abril Fatface', cursive;
+}
+
+/*2. 유저의 사용 폰트 테스트 1번*/
+.sh_font_1 {
+    font-family: 'Poppins', sans-serif;
+    font-style: italic;
+}
+
+/*font-weigth: 100, 200, 300, 400, 500, 600, 700, 800, 900,*/
+/*font-style: lialic*/
+
+/*3. 유저의 사용 폰트 테스트 2번*/
+.sh_font_2 {
+    font-family: 'Anek Devanagari', sans-serif;
+}
+
+/*!*font-weigth: 100, 200, 300, 400, 500, 600, 700, 800, 900,*!*/
+
+/* --------------------------------------------- */
+
+.G {
+    color: #007C32;
+}
+
+.C {
+    color: #F3CB27;
+}
+
+.dropdown-menu {
+    color: white;
+    background-color: transparent;
+}
+
+.btn-outline-secondary:hover {
+    background-color: transparent;
+}
+
+.btn-outline-secondary:active {
+    background-color: transparent;
+}
+
+.btn-outline-secondary.dropdown-toggle.show:focus {
+    box-shadow: none;
+}
+
+.btn-outline-secondary.dropdown-toggle.show {
+    background-color: transparent;
+}
+
+.form-control {
+    color: white;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid white;
+}
+
+.form-control:focus {
+    color: white;
+    background-color: transparent;
+    border-bottom: 1px solid white;
+    box-shadow: none;
+}
+
+.form-control::selection {
+    outline: transparent;
+    border: none;
+}
+
+.dropdown-item:hover {
+    color: white;
+    background-color: transparent;
+}
+
+.dropdown-item {
+    color: white;
+    margin-bottom: 5px;
+}
+
+.mb-3 {
+    margin-right: 150px;
+}
+
+.container_f {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: stretch;
+    padding: 50px 80px;
+}
+
+.head {
+    padding: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.top {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.search_bar {
+    color: white;
+    font-weight: 200;
+    margin-right: 200px;
+    border-bottom: 1px solid #6c757d;
+    padding-bottom: 17px;
+}
+
+.btn_home {
+    font-size: 30px;
+    font-weight: 500;
+    text-align: center;
+    height: fit-content;
+}
+
+.btn_home_margin {
+    margin-right: 60px;
+}
+
+.middle {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.box_title {
+    /*background-color: brown;*/
+    width: 100%;
+    height: max-content;
+    margin: 180px 150px 130px;
+}
+
+.CS_line {
+    border-bottom: 1.5px solid white;
+    width: 65px;
+    margin-bottom: 30px;
+}
+
+.CS_code {
+    font-size: 100px;
+}
+
+.CS_share {
+    margin-top: 10px;
+    margin-left: 175px;
+    font-size: 100px;
+}
+
+.box_login {
+    width: 100%;
+    height: 250px;
+    margin: 125px 180px 130px;
+    display: flex;
+    flex-direction: column;
+}
+
+.idpw {
+    font-size: 30px;
+    width: 80px;
+    text-align: center;
+}
+
+.in {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 100px 0px;
+}
+
+.btn_log_in_up {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    height: 100px;
+    align-items: flex-end;
+}
+
+.btn_col {
+    margin-left: 40px;
+    font-size: 35px;
+}
+
+.base {
+    /*background-color: blue;*/
+    width: 100%;
+}
+
+.s_1 {
+    margin-top: 10px;
+}
+
+.sh_select_none {
+    user-select: none;
+}
+
+.login_btn {
+    background-color: transparent;
+    margin: 0px;
+    padding: 0px;
+    box-shadow: transparent;
+    border: none;
+}

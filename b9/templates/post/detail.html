@@ -2,128 +2,99 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-    <div class="container timeline-container">
-        <div class="row">
-            <!-- 왼쪽 컬럼 -->
-            <div class="col-md-3">
-                {% if post_detail.writer != user %}
-                    <div class="card" style="margin-bottom: 50px;">
-                        <div class="card-body">
-                            <div style="height: 200px; background-size: cover; background-color: bisque;">
-                                {% if user.profile.profile_image %}
-                                <img src="{{ user.profile.profile_image.url }}" alt="프로필 이미지">
-                            {% else %}
-                                <img src="{% static 'default_profile_image.jpg' %}" alt="기본 프로필 이미지">
-                            {% endif %}
-                            </div>
-                            <h5 class="card-title">{{user.last_name}} {{user.first_name}}</h5>
-                            <p class="card-text">{{user.profile.subscript}}</p>
-                        </div>
-                    </div>
-                {% endif %}
-                <div class="card">
-                    <div class="card-body">
-                        <div style="height: 200px; background-size: cover; background-color: bisque;">사진이 들어갈 자리입니다 ^-^
-                            간격은 나중에
-                        </div>
-                        <h5 class="card-title">본인의 이름~</h5>
-                        <p class="card-text">hihihihihihihi</p>
-                    </div>
-                </div>
-            </div>
-            <!-- 오른 쪽 컬럼-->
-            <div class="col-md-7">
-                <!-- 작성 된 글이 나오는 곳 / 아직 사진 div는 추가 안했습니다 임의의 자리에 추가해주시거나 주석으로 달아주시면 정리하겠습니다-->
-                <div class="row">
-                    <div class="col-md-12 mb-4">
-                        <div class="card">
-                            <div class="card-body" style="padding: 20px;">
-                                <div class="media">
-                                    {% if post_detail.writer == user.id %}
-                                    <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between">
-                                        <h5 class="mt-0">{{ post_detail.title }}</h5>
-                                        <div>
-                                            <a href="" style="text-decoration: none;">
-                                                <button type="button" class="btn btn-dark" style="padding: 3px 8px; margin-right: 5px;">
-                                                    수정
-                                                </button>
-                                            </a>
-                                            <a href="post/{{ post_detail.id }}/delete/" style="text-decoration: none;">
-                                                <button type="button" class="btn btn-dark" style="padding: 3px 8px; margin-right: 5px;">
-                                                    삭제
-                                                </button>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    {% else %}
-                                    <h5 class="mt-0">{{ post_detail.title }}</h5>
-                                    {% endif %}
-                                    <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between">
-                                        <div class="media-body"></div>
-                                        <div style="margin: 20px 0px;">{{ post_detail.post }}</div>
-                                    </div>
-                                    <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
-                                        <span style="font-size: small">By. {{ post_detail.writer.last_name }} {{ post_detail.writer.first_name }} - {{ post_detail.created_at|timesince }} 전</span>
-                                        {# like와 comment 아이콘 넣겠습니다 ~ 여유 된다면 호버+자바로 클릭 모션까지 도전.. > like 클릭시 하트+1, comment 클릭시 댓글창으로 navigatar기능? 그런데 바로 밑인데 굳이 필요할까 싶네요#}
-                                        <span style="font-size: small">like {{ post_detail.like_count }} | comment {{ post_detail.comment_count }}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- 댓글 작성 & 댓글 보기 창 -->
-                <div class="row mb-2">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="media">
-                                    <div class="media-body">
-                                        <h5 class="mt-0">나의 이야기를 적어주세요</h5>
-                                        <p>
-                                            <form action="/post/{{ post_detail.id }}/comment/" method="post">
-                                            {% csrf_token %}
-                                            <div class="form-group mb-2">
-                                                                <textarea class="form-control" style="resize: none"
-                                                                            name='my-content'
-                                                                            id="my-content"></textarea>
-                                            </div>
-                                            <button type="submit" class="btn btn-primary" style="float:right;">작성하기
-                                            </button>
-                                        </form>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <h1>{{ post.title }}</h1>
-                <h1>{{ post.title }}</h1>
-                <p>{{ post.content }}</p>
-                <p>작성일: {{ post.created_at }}</p>
-                <p>수정일: {{ post.updated_at }}</p>
-                <h2>댓글</h2>
-                {% if user.is_authenticated %}
-                    <form action="{% url 'post:add_comment' post.id %}" method="post">
-                        {% csrf_token %}
-                        {{ form.as_p }}
-                        <button type="submit">댓글 등록</button>
-                    </form>
-                    {% else %}
-                    <p><a href="{% url 'login' %}?next={{ request.path }}">로그인</a> 후 댓글을 등록할 수 있습니다.</p>
-                    {% endif %}
-                    {% for comment in post.comments.all %}
-                    <div>
-                        <p>{{ comment.content }}</p>
-                        <p>작성자: {{ comment.author }}</p>
-                        <p>작성일: {{ comment.created_at }}</p>
-                        {% if comment.author == user %}
-                        <a href="{% url 'post:edit_comment' comment.id %}">수정</a>
-                        <a href="{% url 'post:delete_comment' comment.id %}">삭제</a>
-                        {% endif %}
-                    </div>
-                    {% empty %}
-                    <p>등록된 댓글이 없습니다.</p>
+<!-- Main -->
+<div id="main">
+
+    <!-- Post -->
+    <article class="post">
+        <header>
+            <div class="title">
+                <h2><a href="#">{{ post_detail.title }}</a></h2>
+                {% if post_detail.tags.all %}
+                {% for tag in post_detail.tags.all %}
+                <a style="text-decoration: none" href="{% url 'post:tagged_object_list' tag.name %}">
+                    <span class="badge rounded-pill bg-success">
+                        {{ tag.name }}
+                    </span>
+                </a>
                 {% endfor %}
-                    {% endblock %}
+                - <a style="text-decoration: none" href="{% url 'post:tag_cloud' %}">TagCloud</a>
+                {% endif %}
+            </div>
+
+            <div class="meta">
+                <time class="published">{{ post_detail.created_at}}</time>
+
+                <a href="#" class="author"><span class="name">{{ post_detail.writer.last_name }} {{post_detail.writer.first_name }}</span>
+                    <img src="{% static 'images/avatar.jpg' %}" alt="" /></a>
+            </div>
+        </header>
+        {% if post_detail.photo.url != None %}
+        <span class="image featured" style="text-align: center;"><img src="{{post_detail.photo.url}}" alt="" style="max-height: 500px; height: auto; width: auto; display: inline-block;"/></span>
+        {% endif %}
+        <div style="margin: 20px 0px;">{{ post_detail.post|safe }}</div>
+        <footer>
+            <ul class="stats">
+                <li><a href="/post/">back</a></li>
+                <li><a href="#" class="icon solid fa-heart">{{ post_detail.like_count }}</a></li>
+                <li><a href="#" class="icon solid fa-comment">{{ post_detail.comment_count }}</a></li>
+                {% if post_detail.writer == user.id %}
+                <li><a href="#">수정</a></li>
+                <li><a href="post/{{ post_detail.id }}/delete/">삭제</a></li>
+                {% endif %}
+            </ul>
+        </footer>
+        <form action="{% url 'post:add_comment' post_detail.id %}" method="post">
+            {% csrf_token %}
+            {{commentform.as_p}}
+            <button type="submit">댓글 등록</button>
+        </form>
+    </article>
+
+    {% for comment in all_comment %}
+    <div class="list-group-item list-group-item-action">
+        <div class="d-flex w-100 justify-content-between">
+            <h3 class="mb-2">{{ comment.author.last_name }} {{ comment.author.first_name }}
+                {% if comment.created_at != comment.updated_at %}
+                (수정됨)
+                {% endif %}
+            </h3>
+            <p>{{ comment.created_at }}</p>
+        </div>
+        <p class="mb-1">{{ comment.content|safe }}</p>
+
+        {% if comment.author == user %}
+        <a onclick="toggleCommentEditForm('{{ comment.id }}')">수정</a>
+        <a href="{% url 'post:delete_comment' comment.id %}">삭제</a>
+
+        <div id="comment-edit-form-{{ comment.id }}" style="display: none; margin-top: 16px;" >
+            <form method="POST" action="{% url 'post:edit_comment' comment.id  %}">
+                {% csrf_token %}
+                <input type="hidden" name="comment_id" value="{{ comment.id }}">
+                <textarea name="content" rows="3" style="margin-bottom: 16px;">{{ comment.content }}</textarea>
+                <button type="submit">등록</button>
+                <button type="button" onclick="toggleCommentEditForm('{{ comment.id }}')">취소</button>
+            </form>
+        </div>
+        {% endif %}
+    </div>
+{% endfor %}
+
+
+</div>
+
+
+<script>
+    function toggleCommentEditForm(commentId) {
+        var form = document.getElementById('comment-edit-form-' + commentId);
+        if (form.style.display === 'none') {
+            form.style.display = 'block';
+        } else {
+            form.style.display = 'none';
+        }
+    }
+</script>
+
+
+
+{% endblock %}
