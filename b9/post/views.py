@@ -64,11 +64,11 @@ class TaggedObjectLV(ListView):
 class UpdatePost(UpdateView):
     model = Post
     form_class = PostForm
-    pk_url_kwarg = 'id'
+    pk_url_kwarg = 'post_id'
     template_name = 'post/post_create.html'
 
     def get_success_url(self):
-        return reverse_lazy('post:detail', kwargs={'id': self.object.pk})
+        return reverse_lazy('post:detail_post', kwargs={'post_id': self.object.pk})
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -167,12 +167,15 @@ def detail_post(request, post_id):
         return redirect('/post')
 
 # 페이지 검색 기능
+
+
 def search(request):
     searched = request.GET.get('postsearched', '')
-    posts = Post.objects.filter(Q(title__icontains=searched)|
+    posts = Post.objects.filter(Q(title__icontains=searched) |
                                 Q(post__icontains=searched)
                                 ).distinct().order_by('-created_at')
-    return render(request, 'post/post_searched.html', {'searched':searched,'posts_searched':posts})
+    return render(request, 'post/post_searched.html', {'searched': searched, 'posts_searched': posts})
+
 
 class PostList(ListView):
     model = Post
@@ -183,9 +186,9 @@ class PostList(ListView):
     def get_queryset(self):
         query = self.request.GET.get('query', '')
         if query:
-            return self.model.objects.filter(Q(title__icontains=query)|
-                                Q(post__icontains=query)
-                                ).distinct().order_by('-created_at')
+            return self.model.objects.filter(Q(title__icontains=query) |
+                                             Q(post__icontains=query)
+                                             ).distinct().order_by('-created_at')
         else:
             return self.model.objects.none()
 

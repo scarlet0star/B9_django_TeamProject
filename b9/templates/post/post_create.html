@@ -4,7 +4,7 @@
 {% block content %}
 <div class="container">
     <h5 class="my-3 border-bottom pb-2">글 작성하기</h5>
-    <form method="POST" class="post-form my-3" action="{% if update %}{% url 'post:post_update' id=post.id %}{% else %}{% url 'post:post_create' %}{% endif %}" enctype="multipart/form-data">
+    <form method="POST" class="post-form my-3" action="{% if update %}{% url 'post:post_update' post_id=post.id %}{% else %}{% url 'post:post_create' %}{% endif %}" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.media }}
         {{ form.as_p }}

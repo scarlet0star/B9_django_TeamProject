@@ -5,7 +5,7 @@ app_name = 'post'
 
 urlpatterns = [
     path('create/', views.post_create, name='post_create'),
-    path('<int:id>/update/', views.UpdatePost.as_view(), name='post_update'),
+    path('<int:post_id>/update/', views.UpdatePost.as_view(), name='post_update'),
     path('<int:post_id>/like/', views.toggle_like, name='toggle_like'),
     path('<int:post_id>/', views.detail_post, name='detail_post'),
     path('<int:post_id>/comment/add/', views.add_comment, name='add_comment'),
