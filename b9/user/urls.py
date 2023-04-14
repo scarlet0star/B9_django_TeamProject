@@ -14,6 +14,6 @@ urlpatterns = [
     path('follows/',views.follow_list,name='follow'),
     path('@<str:username>/follow/',views.add_or_sub_follower,name='following'),
     path('@<str:username>/update/', views.user_mypage_update, name='mypage-update'),
-    path('@<str:username>', views.user_mypage, name='mypage'),
+    path('@<str:username>/', views.user_mypage, name='mypage'),
     path('search/', views.UserList.as_view(), name='search'),
 ]
