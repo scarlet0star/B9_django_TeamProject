@@ -15,6 +15,42 @@
             integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
             crossorigin="anonymous"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@100;200;300;400;500;600;700;800&display=swap');
+
+        /* --------------------------------------------- */
+
+        /* 1. home.html의 #Codeshare 메인폰트입니다*/
+        .sh_title_font {
+            font-family: 'Abril Fatface', cursive;
+        }
+        ƒ
+        /*2. 유저의 사용 폰트 테스트 1번*/
+        .sh_font_1 {
+            font-family: 'Poppins', sans-serif;
+            font-style: italic;
+        }
+
+        /*font-weigth: 100, 200, 300, 400, 500, 600, 700, 800, 900,*/
+        /*font-style: lialic*/
+
+        /*3. 유저의 사용 폰트 테스트 2번*/
+        .sh_font_2 {
+            font-family: 'Anek Devanagari', sans-serif;
+        }
+
+        /*!*font-weigth: 100, 200, 300, 400, 500, 600, 700, 800, 900,*!*/
+
+        /* --------------------------------------------- */
+
+        .G {
+            color: #007C32;
+        }
+        
+        .C {
+            color: #F3CB27;
+        }
 
         .title-center {
             text-align: center;
@@ -46,7 +82,7 @@
     <!-- Header -->
     <header id="header">
         <!-- title -->
-        <h1><a href="{% url 'user:index' %}">Future Imperfect</a></h1>
+        <h1 class="sh_title_font"><a href="{% url 'user:index' %}"><span class=G>C</span>ord share</a></h1>
         <nav class="links">
             {% if not user.is_authenticated %}
             <ul>
@@ -141,7 +177,7 @@
     {% if messages %}
         <ul class="messages">
             {% for message in messages %}
-                <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
             {% endfor %}
         </ul>
     {% endif %}

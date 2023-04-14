@@ -38,10 +38,10 @@ def index(request):
         else:
             followings = Post.objects.none()
     else:
-        followings = []
+        followings = None
     context = {
         'posts': posts,
-        'followings': followings.order_by('-created_at'),
+        'followings': followings.order_by('-created_at') if followings else None
     }
 
     return render(request, "user/index.html", context)
@@ -143,6 +143,9 @@ class UserList(ListView):
     paginate_by = 3
 
     def get_queryset(self):
+        if not self.request.user.is_authenticated:
+            return self.model.objects.none()
+
         query = self.request.GET.get('query', '')
         search_by = self.request.GET.get('search_by', 'ID')
 
@@ -155,6 +158,9 @@ class UserList(ListView):
                 return self.model.objects.none()
 
     def get_context_data(self, **kwargs):
+        if not self.request.user.is_authenticated:
+            return self.model.objects.none()
+
         context = super().get_context_data(**kwargs)
         context['query'] = self.request.GET.get('query', '')
         context['search_by'] = self.request.GET.get('search_by', 'ID')
