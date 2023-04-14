@@ -11,7 +11,11 @@ from post.models import Post
 from django.views.generic import ListView
 from django.db.models import Q
 from django.core.paginator import Paginator
+
+
 # Create your views here.
+def home(request):
+    return render(request, "Codeshare.html")
 
 
 def index(request):

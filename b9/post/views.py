@@ -14,17 +14,6 @@ from django.db.models import Q
 # 메인 페이지
 
 
-def home(request):
-    post_list = Post.objects.all().order_by('-created_at')
-    # 포스트리스트를 5개씩 나누기
-    paginator = Paginator(post_list, 3)
-    # 페이지에 해당되는 페이지의 번호를 받아오기
-    page = request.GET.get('page')
-    # 페이지 번호를 받아서 해당 페이지 게시글들을 리턴하기
-    posts = paginator.get_page(page)
-    # 받아온 페이지를 render를 통해 넘겨주기
-    return render(request, 'post/home.html', {'posts': posts})
-
 # 글 작성 view
 
 
