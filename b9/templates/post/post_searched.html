@@ -6,10 +6,10 @@
     <div class="container timeline-container">
         <div class="row"></div>
         <!-- 오른 쪽 컬럼-->
-        <div class="col-md-7">
+        <div class="col-md-7" style="width: auto">
          <!-- 포스트 검색기능-->
                 <section>
-                    <form method="GET" action="{% url 'post:post_searched' %}">
+                    <form method="GET" action="{% url 'post:post_searched' %}" class="sh_search_home">
                         <input type="text" name="query" placeholder="{{ request.GET.query }}" value="{{ request.GET.query }}">
                         <button type="submit">Post Search</button>
                     </form>
@@ -48,7 +48,7 @@
                             {% if post.photo %}
                                 <a href=" " class="image featured"><img src="{{ post.photo.url }}" alt=""/></a>
                             {% endif %}
-                            <p>{{ post.post }}</p>
+                            <p>{{ post.post|safe }}</p>
                             <footer>
                                 <ul class="actions">
                                     <li><a href="/post/{{ post.id }}" class="button large">Continue Reading</a></li>
