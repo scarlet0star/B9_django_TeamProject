@@ -91,7 +91,7 @@
             </ul>
             {% else %}
             <ul>
-                <li><a href="#">{{ user.username }} 님 반갑습니다 !</a></li>
+                <li><a href="{% url 'user:mypage' username=user.username %}">{{ user.username }} 님 반갑습니다!</a></li>
                 <li><a href="/user/logout">Logout</a></li>
             </ul>
             {% endif %}
@@ -112,8 +112,8 @@
                     <li>
                         <button type="submit">Search</button>
                     </li>
-                    </form>
-                </li> 
+                    </form> 
+                </li>
             </ul>
         </nav>
     </header>

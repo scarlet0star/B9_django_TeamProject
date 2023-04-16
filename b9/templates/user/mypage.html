@@ -26,10 +26,10 @@
                         <h5>회원 정보</h5>
                     </div>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><strong>이름:</strong> {{ user.last_name }}{{ user.first_name }}</li>
-                        <li class="list-group-item"><strong>닉네임:</strong> {{ user.username }}</li>
-                        <li class="list-group-item"><strong>이메일:</strong> {{ user.email }}</li>
-                        <li class="list-group-item"><strong>가입일:</strong> {{ user.date_joined|date:'Y년 m월 d일'}}</li>
+                        <li class="list-group-item"><strong>이름:</strong> {{ user_profile.user.last_name }}{{ user_profile.user.first_name }}</li>
+                        <li class="list-group-item"><strong>닉네임:</strong> {{ user_profile.user.username }}</li>
+                        <li class="list-group-item"><strong>이메일:</strong> {{ user_profile.user.email }}</li>
+                        <li class="list-group-item"><strong>가입일:</strong> {{ user_profile.user.date_joined|date:'Y년 m월 d일'}}</li>
                     </ul>
                 </div>
                 {% if user.username == profile.user.username %}

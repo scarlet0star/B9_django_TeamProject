@@ -95,7 +95,14 @@ def user_mypage(request, username):
     profile = Profile.objects.get(user=user)
     all_mypost = Post.objects.filter(writer=username).order_by('-created_at')
     # likes = Like.objects.filter(user=username)
-    return render(request, 'user/mypage.html', {'profile': profile, 'posts': all_mypost, })
+    if request.user.username == username:
+        # 현재 로그인한 사용자와 페이지 주인이 같은 경우
+        user_profile = profile
+    else:
+        # 다른 사용자의 페이지인 경우 해당 사용자의 프로필 정보를 전달
+        user_profile = Profile.objects.get(user=user)
+
+    return render(request, 'user/mypage.html', {'profile': profile, 'posts': all_mypost, 'user_profile': user_profile})
 
 
 @login_required
