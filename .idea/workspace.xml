@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e1983f8e-64c4-4aa9-baf8-aaa6bb95bad2" name="변경" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/b9/templates/NBcamp[-1].html" beforeDir="false" afterPath="$PROJECT_DIR$/b9/templates/NBcamp[-1].html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -66,7 +67,7 @@
       <workItem from="1681532891389" duration="11418000" />
       <workItem from="1681565310681" duration="1343000" />
       <workItem from="1681567202500" duration="16101000" />
-      <workItem from="1681627782454" duration="23555000" />
+      <workItem from="1681627782454" duration="24329000" />
     </task>
     <servers />
   </component>
@@ -78,7 +79,15 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ID_WIDTH">
+                <map>
+                  <entry key="Table.Default.Author.ColumnIdWidth" value="167" />
+                  <entry key="Table.Default.Date.ColumnIdWidth" value="184" />
+                  <entry key="Table.Space.CommitStatus.ColumnIdWidth" value="146" />
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
