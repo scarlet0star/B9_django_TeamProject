@@ -9,6 +9,7 @@ app_name = 'user'
 urlpatterns = [
     path("", views.index, name='index'),
     path("Codeshare/", views.home, name='codeshare'),
+    path("NBcamp[-1]/", views.b_9, name='b_9'),
     path("signup/", views.user_signup, name='signup'),
     path('login/', views.user_login, name='login'),
     path('logout/', views.user_logout, name='logout'),

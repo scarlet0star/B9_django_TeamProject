@@ -9,76 +9,92 @@
 
 {% block content %}
 
-<!-- Main -->
-<div id="main">
-    {% for user in users %}
-    <article class="post">
-        <!-- User profile image -->
-        {% if user.profile.profile_image %}
-            <img src="{{ user.profile.profile_image.url }}" alt="프로필 이미지" style="max-width: 100%; max-height: 800px;">
-        {% else %}
-            <img src="{% static 'default_profile_image.jpg' %}" alt="기본 프로필 이미지">
-        {% endif %}
+    <!-- Main -->
+    <div id="main">
+        {% for user in users %}
+            <article class="post">
+                <!-- User profile image -->
+                {% if user.profile.profile_image %}
+                    <img src="{{ user.profile.profile_image.url }}" alt="프로필 이미지"
+                         style="max-width: 100%; max-height: 800px;">
+                {% else %}
+                    <img src="{% static 'default_profile_image.jpg' %}" alt="기본 프로필 이미지">
+                {% endif %}
 
-        <ul>
-            <li><a href="{%url 'user:mypage' user.username %}">프로필로 가기</a></li>
+                <ul>
+                    <li><a href="{% url 'user:mypage' user.username %}">프로필로 가기</a></li>
+                </ul>
+                <ul>
+                    <li>
+                        <p>{{ user }}</p>
+                    </li>
+                    <li>
+                        <p>{{ user.email }}</p>
+                    </li>
+                    <li>
+                        <p>자기소개 : {{ user.profile.subscript }}</p>
+                    </li>
+                </ul>
+                <footer>
+                    <ul class="stats">
+                        <li><a href="#" class="icon solid fa-heart">팔로워 수 {{ user.profile.followed_by.count }}</a></li>
+                        <li><a href="#" class="icon solid fa-comment">팔로우 수 {{ user.profile.following.count }}</a></li>
+                    </ul>
+                </footer>
+            </article>
+            {% empty %}
+            <p>No users found.</p>
+        {% endfor %}
+        <!-- Post -->
+
+        <!-- Pagination -->
+        <ul class="actions pagination">
+            <li>
+                {% if page_obj.has_previous %}
+                    <a href="?page=1{% if query %}&query={{ query }}{% endif %}&search_by={{ search_by }}"
+                       class="button large">First Page</a>
+                    <a href="?page=
+
+
+
+                            {{ page_obj.previous_page_number }}{% if query %}&query={{ query }}{% endif %}&search_by={{ search_by }}"
+                       class="button large previous">Previous Page</a>
+                {% else %}
+                    <span class="disabled button large previous">Previous Page</span>
+                {% endif %}
+            </li>
+            <li>
+                {% if page_obj.has_next %}
+                    <a href="?page=
+
+
+
+                            {{ page_obj.next_page_number }}{% if query %}&query={{ query }}{% endif %}&search_by={{ search_by }}"
+                       class="button large next">Next Page</a>
+                    <a href="?page=
+
+
+
+                            {{ page_obj.paginator.num_pages }}{% if query %}&query={{ query }}{% endif %}&search_by={{ search_by }}"
+                       class="button large">Last Page</a>
+                {% else %}
+                    <span class="disabled button large next">Next Page</span>
+                {% endif %}
+            </li>
         </ul>
-        <ul>
-            <li>
-                <p>{{ user }}</p>
-            </li>
-            <li>
-                <p>{{ user.email }}</p>
-            </li>
-            <li>
-                <p>자기소개 : {{ user.profile.subscript }}</p>
-            </li>
+
+    </div>
+    <!-- Footer -->
+    <section id="footer">
+        <ul class="icons">
+            <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+            <li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+            <li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+            <li><a href="#" class="icon solid fa-rss"><span class="label">RSS</span></a></li>
+            <li><a href="#" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
         </ul>
-        <footer>
-            <ul class="stats">
-                <li><a href="#" class="icon solid fa-heart">팔로워 수 {{ user.profile.followed_by.count }}</a></li>
-                <li><a href="#" class="icon solid fa-comment">팔로우 수 {{ user.profile.following.count }}</a></li>
-            </ul>
-        </footer>
-    </article>
-{% empty %}
-    <p>No users found.</p>
-{% endfor %}
-<!-- Post -->
-
-<!-- Pagination -->
-    <ul class="actions pagination">
-        <li>
-            {% if page_obj.has_previous %}
-                <a href="?page=1{% if query %}&query={{ query }}{% endif %}&search_by={{ search_by }}" class="button large">First Page</a>
-                <a href="?page={{ page_obj.previous_page_number }}{% if query %}&query={{ query }}{% endif %}&search_by={{ search_by }}" class="button large previous">Previous Page</a>
-            {% else %}
-                <span class="disabled button large previous">Previous Page</span>
-            {% endif %}
-        </li>
-        <li>
-            {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}{% if query %}&query={{ query }}{% endif %}&search_by={{ search_by }}" class="button large next">Next Page</a>
-                <a href="?page={{ page_obj.paginator.num_pages }}{% if query %}&query={{ query }}{% endif %}&search_by={{ search_by }}" class="button large">Last Page</a>
-            {% else %}
-                <span class="disabled button large next">Next Page</span>
-            {% endif %}
-        </li>
-    </ul>
-
-</div>
-                <!-- Footer -->
-                    <section id="footer">
-                        <ul class="icons">
-                            <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-                            <li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-                            <li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-                            <li><a href="#" class="icon solid fa-rss"><span class="label">RSS</span></a></li>
-                            <li><a href="#" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
-                        </ul>
-                        <p class="copyright">&copy; Untitled. Design: <a href="http://html5up.net">HTML5 UP</a>. Images: <a href="http://unsplash.com">Unsplash</a>.</p>
-                    </section>
-
-            </section>
+        <p class="copyright">&copy; Untitled. Design: <a href="http://html5up.net">HTML5 UP</a>. Images: <a
+                href="http://unsplash.com">Unsplash</a>.</p>
+    </section>
 
 {% endblock %}

@@ -13,6 +13,10 @@ from django.db.models import Q
 from django.core.paginator import Paginator
 
 
+def b_9(request):
+    return render(request, "NBcamp[-1].html")
+
+
 # Create your views here.
 def home(request):
     return render(request, "Codeshare.html")
