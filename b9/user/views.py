@@ -13,6 +13,10 @@ from django.db.models import Q
 from django.core.paginator import Paginator
 
 
+def b_9(request):
+    return render(request, "NBcamp[-1].html")
+
+
 # Create your views here.
 def home(request):
     return render(request, "Codeshare.html")
@@ -95,17 +99,23 @@ def user_mypage(request, username):
     user = get_object_or_404(get_user_model(), username=username)
     profile = Profile.objects.get(user=user)
     all_mypost = Post.objects.filter(writer=username).order_by('-created_at')
+
     for post in all_mypost:
         post.commentcount = Comment.objects.filter(post_id = post.id).count()
     # likes = Like.objects.filter(user=username)
-    if request.user.username == username:
+
+if request.user.username == username:
         # 현재 로그인한 사용자와 페이지 주인이 같은 경우
         user_profile = profile
+        is_following = None
     else:
         # 다른 사용자의 페이지인 경우 해당 사용자의 프로필 정보를 전달
         user_profile = Profile.objects.get(user=user)
+        is_following = request.user.profile.is_following(profile)
 
-    return render(request, 'user/mypage.html', {'profile': profile, 'posts': all_mypost, 'user_profile': user_profile})
+    print(is_following)
+
+    return render(request, 'user/mypage.html', {'profile': profile, 'posts': all_mypost, 'user_profile': user_profile, 'is_following': is_following})
 
 
 @login_required
@@ -124,12 +134,6 @@ def user_mypage_update(request, username):
         user_form = UserUpdateForm(instance=request.user)
         profile_form = ProfileForm(instance=request.user.profile)
     return render(request, 'user/mypage_update.html', {'form': user_form, 'profileform': profile_form})
-
-
-@login_required
-def follow_list(request):
-    follows = request.user.profile.follows.all()
-    return render(request, 'user/follow_list.html', {'follows': follows})
 
 
 @login_required
@@ -176,3 +180,18 @@ class UserList(ListView):
         context['search_by'] = self.request.GET.get('search_by', 'ID')
 
         return context
+
+
+class FollowList(ListView):
+    model = get_user_model()
+    template_name = 'user/user_list.html'
+    context_object_name = 'users'
+    paginate_by = 3
+
+    def get_queryset(self):
+        if not self.request.user.is_authenticated:
+            return self.model.objects.none()
+
+        follows = self.request.user.profile.follows.all()
+        usernames = [profile.user.username for profile in follows]
+        return self.model.objects.filter(username__in=usernames)

@@ -6,12 +6,10 @@
 
 
 {% block content %}
-
     <!-- Main -->
     <div id="main">
         <!-- 포스트 검색기능-->
         <ul class="search">
-
             <form method="GET" action="{% url 'post:post_searched' %}" name="flexForm" class="sh_search_home">
                 <input type="text" name="query" placeholder="PostSearch" class="sh_head_search"
                        value="{{ request.GET.query }}">
@@ -103,8 +101,8 @@
                 <div style="border-bottom: 1px solid white; width: 45px; margin-top: 20px;"></div>
                 <p class="sh_title_font" style="font-size: 45px; margin: 0px;">#<span class="G">C</span>ode</p>
                 <p class="sh_title_font" style="font-size: 45px; margin-left: 85px; margin-bottom: 30px;">share</p>
-                <p style="margin-bottom: 60px;">make by <a href="http://html5up.net">NBCamp[-1]</a></p>
-                <a href="{% url 'post:post_create' %}" class="button large next">글 작성하기</a>
+                <p style="margin-bottom: 60px;">make by <a href="/user/NBcamp[-1]/">NBCamp[-1]</a></p>
+                <a href="{% url "post:post_create" %}" class="button large next">글 작성하기</a>
             </header>
         </section>
 
@@ -154,5 +152,5 @@
 
 
     </section>
-
+    </div>
 {% endblock %}

@@ -9,8 +9,7 @@
         <article class="post">
             <header>
                 <div class="title">
-                    <h2><a href="#">{{ post_detail.title }}</a></h2>
-
+                    <h2>{{ post_detail.title }}</h2>
                     {% if post_detail.tags.all %}
                         {% for tag in post_detail.tags.all %}
                             <a style="font-size: small"
@@ -22,10 +21,8 @@
                             href="{% url 'post:tag_cloud' %}">TagCloud</a>
                     {% endif %}
                 </div>
-
                 <div class="meta">
                     <time class="published">{{ post_detail.created_at }}</time>
-
                     <a href="#" class="author"><span
                             class="name">{{ post_detail.writer.last_name }} {{ post_detail.writer.first_name }}</span>
                         <img src="{% static 'images/avatar.jpg' %}" alt=""/></a>
@@ -62,37 +59,41 @@
             </form>
         </article>
 
+
         {% for comment in all_comment %}
-            <div class="list-group-item list-group-item-action">
-                <div class="d-flex w-100 justify-content-between">
-                    <h3 class="mb-2">{{ comment.author.last_name }} {{ comment.author.first_name }}
-                        {% if comment.created_at != comment.updated_at %}
-                            (수정됨)
-                        {% endif %}
-                    </h3>
-                    <p>{{ comment.created_at }}</p>
-                </div>
-                <p class="mb-1">{{ comment.content|safe }}</p>
-
-                {% if comment.author == user %}
-                    <a onclick="toggleCommentEditForm('{{ comment.id }}')">수정</a>
-                    <a href="{% url 'post:delete_comment' comment.id %}">삭제</a>
-
-                    <div id="comment-edit-form-{{ comment.id }}" style="display: none; margin-top: 16px;">
-                        <form method="POST" action="{% url 'post:edit_comment' comment.id %}">
-                            {% csrf_token %}
-                            <input type="hidden" name="comment_id" value="{{ comment.id }}">
-                            <textarea name="content" rows="3"
-                                      style="margin-bottom: 16px;">{{ comment.content }}</textarea>
-                            <button type="submit">등록</button>
-                            <button type="button" onclick="toggleCommentEditForm('{{ comment.id }}')">취소</button>
-                        </form>
+            <div class="sh_comment_box_custom post">
+                <header style="border-bottom: solid 1px #F3CB27; margin: -3em 0 -1em 0;">
+                    <div class="title">
+                        <h3 class="mb-1 sh_font_2">{{ comment.content|safe }}</h3>
+                        <div style="float: right;">
+                            {% if comment.created_at != comment.updated_at %}
+                                (수정됨)
+                            {% endif %}
+                            {% if comment.author == user %}
+                                <a onclick="toggleCommentEditForm('{{ comment.id }}')">수정</a>
+                                <a href="{% url 'post:delete_comment' comment.id %}">삭제</a>
+                                </div>
+                                <div id="comment-edit-form-{{ comment.id }}" style="display: none; margin-top: 16px;">
+                                    <form method="POST" action="{% url 'post:edit_comment' comment.id %}">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="comment_id" value="{{ comment.id }}">
+                                        <textarea name="content" rows="3"
+                                                  style="margin-bottom: 16px;">{{ comment.content }}</textarea>
+                                        <button type="submit">등록</button>
+                                        <button type="button" onclick="toggleCommentEditForm('{{ comment.id }}')">취소
+                                        </button>
+                                    </form>
+                                </div>
+                            {% endif %}
                     </div>
-                {% endif %}
+                    <div class="meta">
+                        <h3 class="mb-2">{{ comment.author.last_name }} {{ comment.author.first_name }}
+                        </h3>
+                        <p class="sh_date_custom">{{ comment.created_at }}</p>
+                    </div>
+                </header>
             </div>
         {% endfor %}
-
-
     </div>
 
 
