@@ -42,11 +42,11 @@
                                           datetime="{{ post.created_at }}">{{ post.created_at|timesince }}
                                         전
                                     </time>
-                                    <a href="#" class="author"><span class="name">{{ post.writer.username }}</span></a>
+                                    <a href="{% url 'user:mypage' post.writer.username %}" class="author"><span class="name">{{ post.writer.username }}</span></a>
                                 </div>
                             </header>
                             {% if post.photo %}
-                                <a href=" " class="image featured"><img src="{{ post.photo.url }}" alt=""/></a>
+                                <a href="{% url 'post:detail_post' post.writer.username %} " class="image featured"><img src="{{ post.photo.url }}" alt=""/></a>
                             {% endif %}
                             <p>{{ post.post|safe }}</p>
                             <footer>
@@ -54,7 +54,6 @@
                                     <li><a href="/post/{{ post.id }}" class="button large">Continue Reading</a></li>
                                 </ul>
                                 <ul class="stats">
-                                    <li><a href="#">General</a></li>
                                     {% if user in post.like_users.all %}
                                         <li><a href="/post/{{ post.id }}/like/"
                                                class="icon solid fa-heart"

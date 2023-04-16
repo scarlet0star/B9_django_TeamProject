@@ -46,6 +46,7 @@
                             <h5>팔로우</h5>
                         </div>
                         <div class="card-body">
+
                             {% if is_following %}
                                 <a type="button" class="button large" href="{% url 'user:following' user_profile.user.username %}">언팔로우</a>
                             {% else %}
@@ -75,10 +76,56 @@
                                 {% endif %}
 
                             </div>
-                            <div class="card-body">
-                                <a type="button" class="button large" href="/user/@{{ user.username }}/update/">수정하기</a>
+                            <div class="meta">
+                                <time class="published" datetime="{{ post.created_at }}">{{ post.created_at|timesince }}
+                                    전
+                                </time>
+                                <a href="{% url 'user:mypage' post.writer.username %}" class="author"><span class="name">{{ post.writer.username }}</span><img
+                                        src="images/avatar.jpg" alt=""/></a>
                             </div>
-                        </div>
+                        </header>
+                        {% if post.photo %}
+                            <a href="{% url 'post:detail_post' post.id %}" class="image featured"><img src="{{ post.photo.url }}" alt=""/></a>
+                        {% endif %}
+                        <p>{{ post.post|safe }}</p>
+                        <footer>
+                            <ul class="actions">
+                                <li><a href="{% url 'post:detail_post' post.id %}" class="button large">댓글 작성하기</a></li>
+                            </ul>
+                            <ul class="stats">
+                                <li><a href="#">General</a></li>
+                                {% if user in post.like_users.all %}
+                                    <li><a href="{% url 'post:toggle_like' post.id %}"
+                                           class="icon solid fa-heart" style="color:#ff00a0">{{ post.like_count }}</a>
+                                    </li>
+                                {% else %}
+                                    <li><a href="{% url 'post:toggle_like' post.id %}"
+                                           class="icon solid fa-heart"
+                                           style="color: rgba(160, 160, 160, 0.5);">{{ post.like_count }}</a></li>
+                                {% endif %}
+                                <li><a href="#" class="icon solid fa-comment"
+                                       style="color: rgba(160, 160, 160, 0.5);">{{post.commentcount}}</a></li>
+                            </ul>
+                        </footer>
+                    </article>
+                {% endfor %}
+                <!-- 페이지 선택 -->
+                <hr>
+                <ul class="actions pagination">
+                    {#             만약 현재 페이지보다 이전 페이지가 존재 한다면#}
+                    {% if posts.has_previous %}
+                        {#                    바로 전 페이지로 이동하기#}
+                        <li><a href="?page={{ posts.previous_page_number }}" class="button large previous">Previous
+                            Page</a></li>
+                    {% else %}
+                        <li><a href=" " class="disabled button large previous">Previous Page</a></li>
+                    {% endif %}
+                    {#            만약 다음 페이지가 존재 한다면#}
+                    {% if posts.has_next %}
+                        {#                    바로 다음 페이지로 이동하기#}
+                        <li><a href="?page={{ posts.next_page_number }}" class="button large next">Next Page</a></li>
+                    {% else %}
+                        <li><a href=" " class="disabled button large next">Next Page</a></li>
                     {% endif %}
                 </div>
                 <div class="col-md-7">

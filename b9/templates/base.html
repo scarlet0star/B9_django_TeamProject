@@ -76,7 +76,7 @@
 
 <body class="is-preload">
 
-<!-- Wrapper -->
+
 <!-- Wrapper -->
 <div id="wrapper">
     <!-- Header -->
@@ -86,13 +86,13 @@
         <nav class="links">
             {% if not user.is_authenticated %}
                 <ul>
-                    <li><a href="/user/login">Sign In</a></li>
-                    <li><a href="/user/signup">Sign Up</a></li>
+                    <li><a href="{% url 'user:login' %}">Sign In</a></li>
+                    <li><a href="{% url 'user:signup' %}">Sign Up</a></li>
                 </ul>
             {% else %}
             <ul>
                 <li><a href="{% url 'user:mypage' username=user.username %}">{{ user.username }} 님 반갑습니다!</a></li>
-                <li><a href="/user/logout">Logout</a></li>
+                <li><a href="{% url 'user:logout' %}">Logout</a></li>
             </ul>
             {% endif %}
         </nav>
@@ -146,11 +146,11 @@
     </section>
 
     {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-                <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
-            {% endfor %}
-        </ul>
+    {% for message in messages %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
     {% endif %}
 
     {% block content %}
@@ -158,14 +158,27 @@
     {% endblock %}
 
 
+
 </div>
+<div class="container">
+        <!-- Footer -->
+        <section id="footer">
+            <ul class="icons">
+                <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+                <li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+                <li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+                <li><a href="#" class="icon solid fa-rss"><span class="label">RSS</span></a></li>
+                <li><a href="#" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
+            </ul>
+            <p class="copyright">&copy; Untitled. Design: <a href="http://html5up.net">HTML5 UP</a>. Images: <a
+                    href="http://unsplash.com">Unsplash</a>.</p>
+        </section>
+    </div>
 <!-- Scripts -->
 <script src="{% static 'assets/js/jquery.min.js' %}"></script>
 <script src="{% static 'assets/js/browser.min.js' %}"></script>
 <script src="{% static 'assets/js/breakpoints.min.js' %}"></script>
 <script src="{% static 'assets/js/util.js' %}"></script>
 <script src="{% static 'assets/js/main.js' %}"></script>
-
 </body>
-
 </html>

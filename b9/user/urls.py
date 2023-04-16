@@ -1,8 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 from . import views
-from django.conf import settings
-from django.conf.urls.static import static
+
 
 app_name = 'user'
 
@@ -18,5 +17,5 @@ urlpatterns = [
     path('@<str:username>/update/', views.user_mypage_update, name='mypage-update'),
     path('@<str:username>/', views.user_mypage, name='mypage'),
     path('search/', views.UserList.as_view(), name='search'),
-    # path('search/', views.UserList.as_view(), name='search'),
+
 ]

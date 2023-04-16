@@ -4,10 +4,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from .forms import *
 from .models import Profile
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
-from post.models import Post
+from post.models import Post,Comment
 from django.views.generic import ListView
 from django.db.models import Q
 from django.core.paginator import Paginator
@@ -24,6 +24,8 @@ def home(request):
 
 def index(request):
     post_list = Post.objects.all().order_by('-created_at')
+    for post in post_list:
+        post.commentcount = Comment.objects.filter(post_id = post.id).count()
     # 포스트리스트를 5개씩 나누기
     paginator = Paginator(post_list, 4)
     # 페이지에 해당되는 페이지의 번호를 받아오기
@@ -54,7 +56,7 @@ def user_signup(request):
     if request.method == "POST":
         form = UserCreateForm(request.POST)
         if form.is_valid():
-            user = form.save()
+            form.save()
             return redirect('user:login')
         else:
             messages.error(request, form.errors)
@@ -98,7 +100,11 @@ def user_mypage(request, username):
     profile = Profile.objects.get(user=user)
     all_mypost = Post.objects.filter(writer=username).order_by('-created_at')
 
-    if request.user.username == username:
+    for post in all_mypost:
+        post.commentcount = Comment.objects.filter(post_id = post.id).count()
+    # likes = Like.objects.filter(user=username)
+
+if request.user.username == username:
         # 현재 로그인한 사용자와 페이지 주인이 같은 경우
         user_profile = profile
         is_following = None
