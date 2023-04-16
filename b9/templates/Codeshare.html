@@ -165,7 +165,7 @@
     <div class="container_f">
     <div class="head">
         <div class="top">
-            <a href="/user" class="btn_home_margin">
+            <a href="{% url 'user:index' %}" class="btn_home_margin">
                 <p class="sh_title_font btn_home"><span class="C">H</span>ome</p>
             </a>
         </div>
@@ -177,7 +177,7 @@
             <p class="sh_title_font CS_share">share</p>
         </div>
         <div class="box_login">
-            <form method="post" action="/user/login/">
+            <form method="post" action="{% url 'user:lonin' %}">
                 {% csrf_token %}
                 <div class="in">
                     <p class="sh_title_font idpw">ID</p>
@@ -191,7 +191,7 @@
                 </div>
                 <div class="btn_log_in_up">
                     <button type="submit" class="login_btn"><p class="sh_title_font btn_col C">Login</p></button>
-                    <a href="/user/signup"><p class="sh_title_font btn_col G">Signup</p></a>
+                    <a href="{% url 'user:signup' %}"><p class="sh_title_font btn_col G">Signup</p></a>
                 </div>
             </form>
         </div>

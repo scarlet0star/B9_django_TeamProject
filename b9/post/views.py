@@ -36,7 +36,7 @@ def post_create(request):
                 if tag != '':
                     post.tags.add(tag)
             post.save()
-            return redirect('/user')
+            return redirect('user:index')
     if request.method == 'GET':
         form = PostForm()
     return render(request, 'post/post_create.html', {'form': form})
@@ -133,8 +133,8 @@ def toggle_like(request, post_id):
             post.like_users.add(user)
             post.like_count += 1
             post.save()
-        return redirect('/user')
-    return redirect('/user/login')
+        return redirect('user:index')
+    return redirect('user:login')
 
 
 # #현재 사용자가 작성한 게시글에 대한 좋아요 알림을 보여주는 함수
@@ -158,10 +158,14 @@ def detail_post(request, post_id):
             return render(request, 'post/detail.html', {'post_detail': post_detail, 'all_comment': all_comment, 'commentform': commentform})
         else:
             return redirect('login')
-    if request.method == 'DELETE':
-        post = Post.objects.get(id=post_id)
+        
+def delete_post(request, post_id):
+    print('ok')
+    user = request.user
+    post = Post.objects.get(id=post_id)
+    if user == post.writer:
         post.delete()
-        return redirect('/user')
+        return redirect('user:index')
 
 class PostList(ListView):
     model = Post
