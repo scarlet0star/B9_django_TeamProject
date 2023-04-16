@@ -5,42 +5,46 @@
 {% endblock %}
 {% block content %}
     <div>
-        <div class="container mt-4" style="max-width: 100%;">
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5>프로필 이미지</h5>
-                        </div>
-                        <div class="card-body">
-                            {% if user.profile.profile_image %}
-                                <img src="{{ user.profile.profile_image.url }}" alt="프로필 이미지" style="width: 100%; height: 280px ;object-fit: cover; object-position: center; background-color: transparent;">
-                            {% else %}
-                                <img src="{% static 'default_profile_image.jpg' %}" alt="기본 프로필 이미지"
-                                     style="width: 100%; height: 280px; object-fit: cover; object-position: center; background-color: transparent;">
-                            {% endif %}
-                        </div>
+    <div class="container mt-4" style="max-width: 100%;">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>프로필 이미지</h5>
                     </div>
-
+                    <div class="card-body">
+                        {% if user.profile.profile_image %}
+                            <img src="{{ user.profile.profile_image.url }}" alt="프로필 이미지"
+                                 style="width: 100%; height: 280px ;object-fit: cover; object-position: center; background-color: transparent;">
+                        {% else %}
+                            <img src="{% static 'default_profile_image.jpg' %}" alt="기본 프로필 이미지"
+                                 style="width: 100%; height: 280px; object-fit: cover; object-position: center; background-color: transparent;">
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <h5>회원 정보</h5>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><strong>이름:</strong>
+                            {{ user_profile.user.last_name }}{{ user_profile.user.first_name }}</li>
+                        <li class="list-group-item"><strong>닉네임:</strong> {{ user_profile.user.username }}</li>
+                        <li class="list-group-item"><strong>이메일:</strong> {{ user_profile.user.email }}</li>
+                        <li class="list-group-item"><strong>가입일:</strong>
+                            {{ user_profile.user.date_joined|date:'Y년 m월 d일'}}</li>
+                    </ul>
+                </div>
+                {% if user.username == profile.user.username %}
                     <div class="card mt-4">
-                        <div class="card-header">
-                            <h5>회원 정보</h5>
-                        </div>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item"><strong>이름:</strong>
-                                {{ user_profile.user.last_name }}{{ user_profile.user.first_name }}</li>
-                            <li class="list-group-item"><strong>닉네임:</strong> {{ user_profile.user.username }}</li>
-                            <li class="list-group-item"><strong>이메일:</strong> {{ user_profile.user.email }}</li>
-                            <li class="list-group-item"><strong>가입일:</strong>
-                                {{ user_profile.user.date_joined|date:'Y년 m월 d일'}}</li>
-                        </ul>
-                    </div>
-                    {% if user.username == profile.user.username %}
-                        <div class="card mt-4">
                             <div class="card-header">
                                 <h5>회원 정보 수정</h5>
-
-                    {% else %}
+                            </div>
+                            <div class="card-body">
+                                <a type="button" class="button large" href="/user/@{{ user.username }}/update/">수정하기</a>
+                            </div>
+                        </div>
+                {% else %}
                     <div class="card mt-4">
                         <div class="card-header">
                             <h5>팔로우</h5>
@@ -48,13 +52,16 @@
                         <div class="card-body">
 
                             {% if is_following %}
-                                <a type="button" class="button large" href="{% url 'user:following' user_profile.user.username %}">언팔로우</a>
+                                <a type="button" class="button large"
+                                   href="{% url 'user:following' user_profile.user.username %}">언팔로우</a>
                             {% else %}
-                                <a type="button" class="button large" href="{% url 'user:following' user_profile.user.username %}">팔로우</a>
+                                <a type="button" class="button large"
+                                   href="{% url 'user:following' user_profile.user.username %}">팔로우</a>
                             {% endif %}
                         </div>
                     </div>
                 {% endif %}
+
             </div>
             <div class="col-md-7">
                 <h1>Posting List</h1>
@@ -127,7 +134,9 @@
                     {% else %}
                         <li><a href=" " class="disabled button large next">Next Page</a></li>
                     {% endif %}
+
                 </div>
+            
                 <div class="col-md-7">
                     <h1>Posting List</h1>
                     <hr>
@@ -207,4 +216,3 @@
         </div>
     </div>
 {% endblock %}
-
