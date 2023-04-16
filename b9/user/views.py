@@ -95,6 +95,8 @@ def user_mypage(request, username):
     user = get_object_or_404(get_user_model(), username=username)
     profile = Profile.objects.get(user=user)
     all_mypost = Post.objects.filter(writer=username).order_by('-created_at')
+    for post in all_mypost:
+        post.commentcount = Comment.objects.filter(post_id = post.id).count()
     # likes = Like.objects.filter(user=username)
     if request.user.username == username:
         # 현재 로그인한 사용자와 페이지 주인이 같은 경우
