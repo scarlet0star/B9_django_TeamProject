@@ -90,10 +90,10 @@
                     <li><a href="/user/signup">Sign Up</a></li>
                 </ul>
             {% else %}
-                <ul>
-                    <li><a href="{% url 'user:mypage' username=user.username %}">{{ user.username }} 님 반갑습니다!</a></li>
-                    <li><a href="/user/logout">Logout</a></li>
-                </ul>
+            <ul>
+                <li><a href="{% url 'user:mypage' username=user.username %}">{{ user.username }} 님 반갑습니다!</a></li>
+                <li><a href="/user/logout">Logout</a></li>
+            </ul>
             {% endif %}
         </nav>
         <nav class="main">
@@ -114,7 +114,8 @@
                     <li>
                         <button type="submit">Search</button>
                     </li>
-                </form>
+                    </form> 
+                </li>
             </ul>
         </nav>
     </header>

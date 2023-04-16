@@ -101,6 +101,7 @@ def user_mypage(request, username):
     else:
         # 다른 사용자의 페이지인 경우 해당 사용자의 프로필 정보를 전달
         user_profile = Profile.objects.get(user=user)
+
     return render(request, 'user/mypage.html', {'profile': profile, 'posts': all_mypost, 'user_profile': user_profile})
 
 
