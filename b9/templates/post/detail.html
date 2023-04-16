@@ -2,98 +2,110 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<!-- Main -->
-<div id="main">
+    <!-- Main -->
+    <div id="main">
 
-    <!-- Post -->
-    <article class="post">
-        <header>
-            <div class="title">
-                <h2><a href="#">{{ post_detail.title }}</a></h2>
-                {% if post_detail.tags.all %}
-                {% for tag in post_detail.tags.all %}
-                <a style="text-decoration: none" href="{% url 'post:tagged_object_list' tag.name %}">
-                    <span class="badge rounded-pill bg-success">
-                        {{ tag.name }}
-                    </span>
-                </a>
-                {% endfor %}
-                - <a style="text-decoration: none" href="{% url 'post:tag_cloud' %}">TagCloud</a>
-                {% endif %}
-            </div>
+        <!-- Post -->
+        <article class="post">
+            <header>
+                <div class="title">
+                    <h2><a href="#">{{ post_detail.title }}</a></h2>
 
-            <div class="meta">
-                <time class="published">{{ post_detail.created_at}}</time>
+                    {% if post_detail.tags.all %}
+                        {% for tag in post_detail.tags.all %}
+                            <a style="font-size: small"
+                               href="{% url 'post:tagged_object_list' tag.name %}">
+                                <span> #{{ tag.name }}&nbsp; </span>
+                            </a>
+                        {% endfor %}
+                        -<a style="font-size: small"
+                            href="{% url 'post:tag_cloud' %}">TagCloud</a>
+                    {% endif %}
+                </div>
 
-                <a href="#" class="author"><span class="name">{{ post_detail.writer.last_name }} {{post_detail.writer.first_name }}</span>
-                    <img src="{% static 'images/avatar.jpg' %}" alt="" /></a>
-            </div>
-        </header>
-        {% if post_detail.photo.url != None %}
-        <span class="image featured" style="text-align: center;"><img src="{{post_detail.photo.url}}" alt="" style="max-height: 500px; height: auto; width: auto; display: inline-block;"/></span>
-        {% endif %}
-        <div style="margin: 20px 0px;">{{ post_detail.post|safe }}</div>
-        <footer>
-            <ul class="stats">
-                <li><a href="/post/">back</a></li>
-                <li><a href="#" class="icon solid fa-heart">{{ post_detail.like_count }}</a></li>
-                <li><a href="#" class="icon solid fa-comment">{{ post_detail.comment_count }}</a></li>
-                {% if post_detail.writer == user.id %}
-                <li><a href="#">수정</a></li>
-                <li><a href="post/{{ post_detail.id }}/delete/">삭제</a></li>
-                {% endif %}
-            </ul>
-        </footer>
-        <form action="{% url 'post:add_comment' post_detail.id %}" method="post">
-            {% csrf_token %}
-            {{commentform.as_p}}
-            <button type="submit">댓글 등록</button>
-        </form>
-    </article>
+                <div class="meta">
+                    <time class="published">{{ post_detail.created_at }}</time>
 
-    {% for comment in all_comment %}
-    <div class="list-group-item list-group-item-action">
-        <div class="d-flex w-100 justify-content-between">
-            <h3 class="mb-2">{{ comment.author.last_name }} {{ comment.author.first_name }}
-                {% if comment.created_at != comment.updated_at %}
-                (수정됨)
-                {% endif %}
-            </h3>
-            <p>{{ comment.created_at }}</p>
-        </div>
-        <p class="mb-1">{{ comment.content|safe }}</p>
-
-        {% if comment.author == user %}
-        <a onclick="toggleCommentEditForm('{{ comment.id }}')">수정</a>
-        <a href="{% url 'post:delete_comment' comment.id %}">삭제</a>
-
-        <div id="comment-edit-form-{{ comment.id }}" style="display: none; margin-top: 16px;" >
-            <form method="POST" action="{% url 'post:edit_comment' comment.id  %}">
+                    <a href="#" class="author"><span
+                            class="name">{{ post_detail.writer.last_name }} {{ post_detail.writer.first_name }}</span>
+                        <img src="{% static 'images/avatar.jpg' %}" alt=""/></a>
+                </div>
+            </header>
+            {% if post_detail.photo.url != None %}
+                <span class="image featured" style="text-align: center;"><img src="{{ post_detail.photo.url }}" alt=""
+                                                                              style="max-height: 500px; height: auto; width: auto; display: inline-block;"/></span>
+            {% endif %}
+            <div style="margin: 20px 0px;">{{ post_detail.post|safe }}</div>
+            <footer>
+                <ul class="stats">
+                    <li><a href="/post/">back</a></li>
+                    {% if user in post_detail.like_users.all %}
+                        <li><a href="/post/{{ post_detail.id }}/like/"
+                               class="icon solid fa-heart" style="color:#ff00a0">{{ post_detail.like_count }}</a>
+                        </li>
+                    {% else %}
+                        <li><a href="/post/{{ post_detail.id }}/like/"
+                               class="icon solid fa-heart"
+                               style="color: rgba(160, 160, 160, 0.5);">{{ post_detail.like_count }}</a></li>
+                    {% endif %}
+                    <li><a href="#" class="icon solid fa-comment">{{ post_detail.comment_count }}</a></li>
+                    {% if post_detail.writer == user.id %}
+                        <li><a href="#">수정</a></li>
+                        <li><a href="post/{{ post_detail.id }}/delete/">삭제</a></li>
+                    {% endif %}
+                </ul>
+            </footer>
+            <form action="{% url 'post:add_comment' post_detail.id %}" method="post">
                 {% csrf_token %}
-                <input type="hidden" name="comment_id" value="{{ comment.id }}">
-                <textarea name="content" rows="3" style="margin-bottom: 16px;">{{ comment.content }}</textarea>
-                <button type="submit">등록</button>
-                <button type="button" onclick="toggleCommentEditForm('{{ comment.id }}')">취소</button>
+                {{ commentform.as_p }}
+                <button type="submit">댓글 등록</button>
             </form>
-        </div>
-        {% endif %}
+        </article>
+
+        {% for comment in all_comment %}
+            <div class="list-group-item list-group-item-action">
+                <div class="d-flex w-100 justify-content-between">
+                    <h3 class="mb-2">{{ comment.author.last_name }} {{ comment.author.first_name }}
+                        {% if comment.created_at != comment.updated_at %}
+                            (수정됨)
+                        {% endif %}
+                    </h3>
+                    <p>{{ comment.created_at }}</p>
+                </div>
+                <p class="mb-1">{{ comment.content|safe }}</p>
+
+                {% if comment.author == user %}
+                    <a onclick="toggleCommentEditForm('{{ comment.id }}')">수정</a>
+                    <a href="{% url 'post:delete_comment' comment.id %}">삭제</a>
+
+                    <div id="comment-edit-form-{{ comment.id }}" style="display: none; margin-top: 16px;">
+                        <form method="POST" action="{% url 'post:edit_comment' comment.id %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="comment_id" value="{{ comment.id }}">
+                            <textarea name="content" rows="3"
+                                      style="margin-bottom: 16px;">{{ comment.content }}</textarea>
+                            <button type="submit">등록</button>
+                            <button type="button" onclick="toggleCommentEditForm('{{ comment.id }}')">취소</button>
+                        </form>
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+
     </div>
-{% endfor %}
 
 
-</div>
-
-
-<script>
-    function toggleCommentEditForm(commentId) {
-        var form = document.getElementById('comment-edit-form-' + commentId);
-        if (form.style.display === 'none') {
-            form.style.display = 'block';
-        } else {
-            form.style.display = 'none';
+    <script>
+        function toggleCommentEditForm(commentId) {
+            var form = document.getElementById('comment-edit-form-' + commentId);
+            if (form.style.display === 'none') {
+                form.style.display = 'block';
+            } else {
+                form.style.display = 'none';
+            }
         }
-    }
-</script>
+    </script>
 
 
 
