@@ -7,8 +7,7 @@
 {% block content %}
   <br />
   <div class="container">
-    <h1>마이페이지 수정</h1>
-    <div class="wrap">
+    <div class="wrap" style="margin: 0px;">
       <h2 class="my-4">회원 정보 수정</h2>
       <form method="post" action="" enctype="multipart/form-data">
         {% csrf_token %}
@@ -35,9 +34,9 @@
           <input type="email" class="form-control" id="{{ form.email.id_for_label }}" name="{{ form.email.html_name }}" value="{{ user.email }}" required />
         </div>
 
-        <button type="submit" class="btn btn-primary">수정하기</button>
+        <button type="submit" class="button large">수정하기</button>
 
-        <a type="button" class="btn btn-primary" href="/">메인 페이지로</a>
+        <a type="button" class="button large" href="/">메인 페이지로</a>
       </form>
     </div>
   </div>

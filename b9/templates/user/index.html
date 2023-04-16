@@ -1,5 +1,3 @@
-
-
 {% extends 'base.html' %}
 
 {% block title %}
@@ -12,9 +10,10 @@
     <!-- Main -->
     <div id="main">
         <!-- 포스트 검색기능-->
-        <ul class="search" >
-            <form  method="GET" action="{% url 'post:post_searched' %}" name="flexForm">
-                <input  type="text" name="query" placeholder="PostSearch"
+        <ul class="search">
+
+            <form method="GET" action="{% url 'post:post_searched' %}" name="flexForm" class="sh_search_home">
+                <input type="text" name="query" placeholder="PostSearch" class="sh_head_search"
                        value="{{ request.GET.query }}">
                 <button type="submit">Post Search</button>
             </form>
@@ -41,13 +40,13 @@
                             <time class="published" datetime="{{ post.created_at }}">{{ post.created_at|timesince }}
                                 전
                             </time>
-                            <a href="{% url 'user:mypage' post.writer.username %}" class="author"><span class="name">{{ post.writer.username }}</span></a>
+                            <a href="#"><span class="name">{{ post.writer.username }}</span></a>
                         </div>
                     </header>
                     {% if post.photo %}
                         <a href=" " class="image featured"><img src="{{ post.photo.url }}" alt=""/></a>
                     {% endif %}
-                    <p>{{ post.post }}</p>
+                    <p>{{ post.post|safe }}</p>
                     <footer>
                         <ul class="actions">
                             <li><a href="/post/{{ post.id }}" class="button large">Continue Reading</a></li>
@@ -92,7 +91,7 @@
                     <li><a href=" " class="disabled button large next">Next Page</a></li>
                 {% endif %}
             </ul>
-
+        </ul>
     </div>
     <!-- Sidebar -->
     <section id="sidebar">
@@ -101,10 +100,12 @@
         <section id="intro">
             <a href="#" class="logo"><img src="images/logo.jpg" alt=""/></a>
             <header>
-                <h2>Future Imperfect</h2>
-                <p>Another fine responsive site template by <a href="http://html5up.net">HTML5 UP</a></p>
+                <div style="border-bottom: 1px solid white; width: 45px; margin-top: 20px;"></div>
+                <p class="sh_title_font" style="font-size: 45px; margin: 0px;">#<span class="G">C</span>ode</p>
+                <p class="sh_title_font" style="font-size: 45px; margin-left: 85px; margin-bottom: 30px;">share</p>
+                <p style="margin-bottom: 60px;">make by <a href="http://html5up.net">NBCamp[-1]</a></p>
+                <a href="{% url "post:post_create" %}" class="button large next">글 작성하기</a>
             </header>
-           <a href="{% url "post:post_create" %}" class="button large next">글 작성하기</a>
         </section>
 
         <!-- Mini Posts -->
@@ -112,31 +113,32 @@
             <div class="mini-posts">
                 <!-- Mini Post -->
                 {% if not request.user.authenticated %}
-                <p>팔로워들의 포스트</p>
-                {% for post in followings %}
-                    <article class="mini-post">
-                        <header>
-                            <h3><a href="{% url 'post:detail_post' post.id %}">{{ post.title }}</a></h3>
-                            <time class="published" datetime="{{ post.created_at|date:'c' }}">
-                                {{ post.created_at|date:"F d, Y" }}</time>
-                            <p>{{ post.writer }}</p>
-                            {% if post.author.profile.profile_image %}
-                                <a href="#" class="author"><img src="{{ post.author.profile.profile_image.url }}"
-                                                                alt=""/></a>
-                            {% else %}
-                                <a href="#" class="author"><img src="images/avatar.jpg" alt=""/></a>
+                    <p class="sh_title_font" style="font-size: 25px;"><span class="C">F</span>ollowing's Post List</p>
+                    {% for post in followings %}
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="{% url 'post:detail_post' post.id %}">{{ post.title }}</a></h3>
+                                <time class="published" datetime="{{ post.created_at|date:'c' }}">
+                                    {{ post.created_at|date:"F d, Y" }}</time>
+                                <p>{{ post.writer }}</p>
+                                {% if post.author.profile.profile_image %}
+                                    <a href="#" class="author"><img src="{{ post.author.profile.profile_image.url }}"
+                                                                    alt=""/></a>
+                                {% else %}
+                                    <a href="#" class="author"><img src="images/avatar.jpg" alt=""/></a>
+                                {% endif %}
+                            </header>
+                            {% if post.photo %}
+                                <a href="{% url 'post:detail_post' post.id %}" class="image"><img
+                                        src="{{ post.photo.url }}"
+                                        alt=""/></a>
                             {% endif %}
-                        </header>
-                        {% if post.photo %}
-                            <a href="{% url 'post:detail_post' post.id %}" class="image"><img src="{{ post.photo.url }}"
-                                                                                              alt=""/></a>
-                        {% endif %}
-                    </article>
-                    {% empty %}
-                    <p>팔로잉한 사용자의 게시물이 없습니다.</p>
-                {% endfor %}
-                {%else%}
-                {%endif%}
+                        </article>
+                        {% empty %}
+                        <p class="sh_font_2">팔로잉한 사용자의 게시물이 없습니다.</p>
+                    {% endfor %}
+                {% else %}
+                {% endif %}
             </div>
         </section>
 
