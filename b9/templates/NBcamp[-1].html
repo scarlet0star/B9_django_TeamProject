@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <title>Cordshare</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@100;200;300;400;500;600;700;800&display=swap');
+
+        /* --------------------------------------------- */
+
+        /* 1. home.html의 #Codeshare 메인폰트입니다*/
+        .sh_title_font {
+            font-family: 'Abril Fatface', cursive;
+        }
+
+        /*2. 유저의 사용 폰트 테스트 1번*/
+        .sh_font_1 {
+            font-family: 'Poppins', sans-serif;
+            font-style: italic;
+        }
+
+        /*font-weigth: 100, 200, 300, 400, 500, 600, 700, 800, 900,*/
+        /*font-style: lialic*/
+
+        /*3. 유저의 사용 폰트 테스트 2번*/
+        .sh_font_2 {
+            font-family: 'Anek Devanagari', sans-serif;
+        }
+
+        /*!*font-weigth: 100, 200, 300, 400, 500, 600, 700, 800, 900,*!*/
+
+        /* --------------------------------------------- */
+
+        html, body, div, span, applet, object,
+        iframe, h1, h2, h3, h4, h5, h6, p, blockquote,
+        pre, a, abbr, acronym, address, big, cite,
+        code, del, dfn, em, img, ins, kbd, q, s, samp,
+        small, strike, strong, sub, sup, tt, var, b,
+        u, i, center, dl, dt, dd, ol, ul, li, fieldset,
+        form, label, legend, table, caption, tbody,
+        tfoot, thead, tr, th, td, article, aside,
+        canvas, details, embed, figure, figcaption,
+        footer, header, hgroup, menu, nav, output, ruby,
+        section, summary, time, mark, audio, video {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+        }
+
+        article, aside, details, figcaption, figure,
+        footer, header, hgroup, menu, nav, section {
+            display: block;
+        }
+
+        body {
+            line-height: 1;
+        }
+
+        ol, ul {
+            list-style: none;
+        }
+
+        blockquote, q {
+            quotes: none;
+        }
+
+        blockquote:before, blockquote:after, q:before, q:after {
+            content: '';
+            content: none;
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        body {
+            -webkit-text-size-adjust: none;
+        }
+
+        mark {
+            background-color: transparent;
+            color: inherit;
+        }
+
+        input::-moz-focus-inner {
+            border: 0;
+            padding: 0;
+        }
+
+        input, select, textarea {
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            -ms-appearance: none;
+            appearance: none;
+        }
+
+        /* Basic */
+
+        @-ms-viewport {
+            width: sdevice-width;
+        }
+
+        body {
+            -ms-overflow-style: scrollbar;
+        }
+
+        @media screen and (max-width: 480px) {
+
+            html, body {
+                min-width: 320px;
+            }
+
+        }
+
+        html {
+            box-sizing: border-box;
+        }
+
+        *, *:before, *:after {
+            box-sizing: inherit;
+        }
+
+        body.is-preload *, body.is-preload *:before, body.is-preload *:after {
+            -moz-animation: none !important;
+            -webkit-animation: none !important;
+            -ms-animation: none !important;
+            animation: none !important;
+            -moz-transition: none !important;
+            -webkit-transition: none !important;
+            -ms-transition: none !important;
+            transition: none !important;
+        }
+
+        body {
+            background-image: url("{% static 'images/cordshare_background.png'%}");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            overflow: hidden;
+            color: white;
+        }
+
+        a {
+            color: white;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: inherit;
+        }
+
+        input {
+            background-color: transparent;
+            border-color: transparent;
+            border-bottom: 1px solid white;
+            caret-color: transparent;
+            width: 400px;
+            padding-bottom: 2px;
+        }
+
+        input:focus-visible {
+            outline: transparent;
+        }
+
+        input::selection {
+            background-color: transparent;
+        }
+
+        .G {
+            color: #007C32;
+        }
+
+        .C {
+            color: #F3CB27;
+        }
+
+        .dropdown-menu {
+            color: white;
+            background-color: transparent;
+        }
+
+        .btn-outline-secondary:hover {
+            background-color: transparent;
+        }
+
+        .btn-outline-secondary:active {
+            background-color: transparent;
+        }
+
+        .btn-outline-secondary.dropdown-toggle.show:focus {
+            box-shadow: none;
+        }
+
+        .btn-outline-secondary.dropdown-toggle.show {
+            background-color: transparent;
+        }
+
+        .form-control {
+            color: white;
+            background-color: transparent;
+            border: none;
+            border-bottom: 1px solid white;
+            width: 450px;
+        }
+
+        .form-control:focus {
+            color: white;
+            background-color: transparent;
+            border-bottom: 1px solid white;
+            box-shadow: none;
+        }
+
+        .form-control::selection {
+            outline: transparent;
+            border: none;
+        }
+
+        .container_f {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: nowrap;
+            justify-content: stretch;
+            padding: 50px 100px;
+        }
+
+        .head {
+            padding: 30px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        .top {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .btn_home {
+            font-size: 30px;
+            font-weight: 500;
+            text-align: center;
+            height: fit-content;
+        }
+
+        .btn_home_margin {
+            margin-right: 130px;
+        }
+
+        .middle {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+        }
+
+        .box_title {
+            width: 100%;
+            height: max-content;
+            font-size: 50px;
+        }
+
+        .CS_line {
+            width: 45px;
+            border-bottom: 1px solid white;
+            margin-bottom: 10px;
+        }
+
+        .CS_code {
+            font-size: 70px;
+        }
+
+        .CS_share {
+            font-size: 70px;
+            margin-left: 120px;
+        }
+
+        .box_login {
+            width: 100%;
+            height: 250px;
+            margin: 150px 100px 0px 70px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .idpw {
+            font-size: 30px;
+            width: 90px;
+            text-align: center;
+        }
+
+        .in {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-top: 100px;
+        }
+
+        .btn_log_in_up {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            height: 220px;
+            align-items: flex-end;
+        }
+
+        .base {
+            /*background-color: blue;*/
+            width: 100%;
+        }
+
+
+        .sh_select_none {
+            user-select: none;
+            font-size: 18px;
+        }
+
+        .login_btn {
+            background-color: transparent;
+            margin: 0px;
+            padding: 0px;
+            box-shadow: transparent;
+            border: none;
+        }
+
+        .no-select {
+            -webkit-user-select: none; /* Chrome, Safari, Opera */
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* 일반적인 형태 */
+        }
+
+        .camp_text {
+            float: right;
+            font-size: 50px;
+        }
+
+
+    </style>
+
+</head>
+
+<body>
+<div class="container_f">
+    <div class="head">
+        <div class="box_title">
+            <div class="CS_line"></div>
+            <p class="sh_title_font CS_code">#<span class="G">C</span>ode</p>
+            <p class="sh_title_font CS_share">share</p>
+        </div>
+        <div class="box_title">
+            <p class="sh_title_font CS_share camp_text C">NBCamp[ -1 ]</p>
+        </div>
+    </div>
+    <div class="middle">
+        <div class="box_login">
+            <div class="in">
+                <p class="sh_title_font idpw">ID</p>
+                <input type="text" class="form-control sh_font_2 sh_select_none no-select" id="username"
+                       name="username">
+            </div>
+        </div>
+    </div>
+    <div class="base">
+        <div class="top">
+            <a href="/user" class="btn_home_margin">
+                <p class="sh_title_font btn_home"><span class="C">H</span>ome</p>
+            </a>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

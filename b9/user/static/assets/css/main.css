@@ -29,6 +29,24 @@
     background-color: rgba(0, 12, 5, 0.8);
 }
 
+.sh_comment_box_custom {
+    border: solid 1px rgba(243, 203, 39, 0.5);
+}
+
+.sh_date_custom {
+    font-size: 12px;
+}
+
+
+/*클래스가 왜 적용이 안될까요... 다른건 다 되는데..? ^^...*/
+/*.sh_profile_img {*/
+/*    width: 100%;*/
+/*    height: 280px;*/
+/*    object-fit: cover;*/
+/*    object-position: center;*/
+/*    background-color: transparent;*/
+/*}*/
+
 /*
 	Future Imperfect by HTML5 UP
 	html5up.net | @ajlkn
@@ -129,9 +147,9 @@ html {
 }
 
 body {
-    background: url(https://i.postimg.cc/05FB3PDC/Group-82.png);
-    background-position: unset;
-    background-repeat: revert;
+    background-image: url('../../images/main_back.png');
+    background-position: top;
+    background-repeat: repeat-y;
     background-color: #001307;
 }
 
@@ -204,6 +222,7 @@ a {
     border-bottom: dotted 1px rgba(160, 160, 160, 0.65);
     color: inherit;
     text-decoration: none;
+    margin-left: 10px;
 }
 
 a:before {
@@ -232,7 +251,7 @@ em, i {
 }
 
 p {
-    margin: 0 0 2em 0;
+    margin: 0 0 1.5em 0;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -1904,7 +1923,8 @@ button,
     background-color: transparent;
     border: 0;
     box-shadow: inset 0 0 0 1px rgba(160, 160, 160, 0.3);
-    color: #bdbdbd; !important;
+    color: #bdbdbd;
+!important;
     cursor: pointer;
     display: inline-block;
     font-family: "Raleway", Helvetica, sans-serif;
@@ -3089,7 +3109,7 @@ section.special, article.special {
 
 header p {
     font-family: "Raleway", Helvetica, sans-serif;
-    font-size: 0.7em;
+    font-size: 18px;
     font-weight: 400;
     letter-spacing: 0.25em;
     line-height: 2.5;
