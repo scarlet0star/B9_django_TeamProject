@@ -61,6 +61,7 @@
     background-color: transparent;
     border: none;
     border-bottom: 1px solid white;
+    width: 450px;
 }
 
 .form-control:focus {
@@ -94,7 +95,7 @@
     flex-direction: column;
     flex-wrap: nowrap;
     justify-content: stretch;
-    padding: 50px 80px;
+    padding: 50px 100px;
 }
 
 .head {
@@ -128,7 +129,7 @@
 }
 
 .btn_home_margin {
-    margin-right: 60px;
+    margin-right: 130px;
 }
 
 .middle {
@@ -141,7 +142,7 @@
     /*background-color: brown;*/
     width: 100%;
     height: max-content;
-    margin: 180px 150px 130px;
+    margin: 180px 100px 130px;
 }
 
 .CS_line {
@@ -151,26 +152,26 @@
 }
 
 .CS_code {
-    font-size: 100px;
+    font-size: 120px;
 }
 
 .CS_share {
     margin-top: 10px;
-    margin-left: 175px;
-    font-size: 100px;
+    margin-left: 210px;
+    font-size: 120px;
 }
 
 .box_login {
     width: 100%;
     height: 250px;
-    margin: 125px 180px 130px;
+    margin: 150px 100px 0px 70px;
     display: flex;
     flex-direction: column;
 }
 
 .idpw {
     font-size: 30px;
-    width: 80px;
+    width: 90px;
     text-align: center;
 }
 
@@ -178,19 +179,19 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin: 100px 0px;
+    margin-top: 100px;
 }
 
 .btn_log_in_up {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
-    height: 100px;
+    height: 220px;
     align-items: flex-end;
 }
 
 .btn_col {
-    margin-left: 40px;
+    margin-left: 50px;
     font-size: 35px;
 }
 
@@ -205,6 +206,7 @@
 
 .sh_select_none {
     user-select: none;
+    font-size: 18px;
 }
 
 .login_btn {
@@ -213,4 +215,11 @@
     padding: 0px;
     box-shadow: transparent;
     border: none;
+}
+
+.no-select {
+  -webkit-user-select: none; /* Chrome, Safari, Opera */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* 일반적인 형태 */
 }
