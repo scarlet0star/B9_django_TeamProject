@@ -42,6 +42,19 @@
                             <a type="button" class="button large" href="/user/@{{ user.username }}/update/">수정하기</a>
                         </div>
                     </div>
+                    {% else %}
+                    <div class="card mt-4">
+                        <div class="card-header">
+                            <h5>팔로우</h5>
+                        </div>
+                        <div class="card-body">
+                            {% if is_following %}
+                                <a type="button" class="button large" href="{% url 'user:following' user_profile.user.username %}">언팔로우</a>
+                            {% else %}
+                                <a type="button" class="button large" href="{% url 'user:following' user_profile.user.username %}">팔로우</a>
+                            {% endif %}
+                        </div>
+                    </div>
                 {% endif %}
             </div>
             <div class="col-md-7">
