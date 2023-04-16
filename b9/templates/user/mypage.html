@@ -39,7 +39,7 @@
                             <h5>회원 정보 수정</h5>
                         </div>
                         <div class="card-body">
-                            <a type="button" class="button large" href="/user/@{{ user.username }}/update/">수정하기</a>
+                            <a type="button" class="button large" href="{% url 'user:mypage-update' user.username %}">수정하기</a>
                         </div>
                     </div>
                 {% endif %}
@@ -67,26 +67,26 @@
                                 <time class="published" datetime="{{ post.created_at }}">{{ post.created_at|timesince }}
                                     전
                                 </time>
-                                <a href="#" class="author"><span class="name">{{ post.writer.username }}</span><img
+                                <a href="{% url 'user:mypage' post.writer.username %}" class="author"><span class="name">{{ post.writer.username }}</span><img
                                         src="images/avatar.jpg" alt=""/></a>
                             </div>
                         </header>
                         {% if post.photo %}
-                            <a href=" " class="image featured"><img src="{{ post.photo.url }}" alt=""/></a>
+                            <a href="{% url 'post:detail_post' post.id %}" class="image featured"><img src="{{ post.photo.url }}" alt=""/></a>
                         {% endif %}
                         <p>{{ post.post|safe }}</p>
                         <footer>
                             <ul class="actions">
-                                <li><a href="/post/{{ post.id }}" class="button large">댓글 작성하기</a></li>
+                                <li><a href="{% url 'post:detail_post' post.id %}" class="button large">댓글 작성하기</a></li>
                             </ul>
                             <ul class="stats">
                                 <li><a href="#">General</a></li>
                                 {% if user in post.like_users.all %}
-                                    <li><a href="/post/{{ post.id }}/like/"
+                                    <li><a href="{% url 'post:toggle_like' post.id %}"
                                            class="icon solid fa-heart" style="color:#ff00a0">{{ post.like_count }}</a>
                                     </li>
                                 {% else %}
-                                    <li><a href="/post/{{ post.id }}/like/"
+                                    <li><a href="{% url 'post:toggle_like' post.id %}"
                                            class="icon solid fa-heart"
                                            style="color: rgba(160, 160, 160, 0.5);">{{ post.like_count }}</a></li>
                                 {% endif %}

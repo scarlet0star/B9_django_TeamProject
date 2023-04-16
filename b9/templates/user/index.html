@@ -44,30 +44,30 @@
                         </div>
                     </header>
                     {% if post.photo %}
-                        <a href=" " class="image featured"><img src="{{ post.photo.url }}" alt=""/></a>
+                        <a href="{% url 'post:detail_post' post.id %}" class="image featured"><img src="{{ post.photo.url }}" alt=""/></a>
                     {% endif %}
                     <p>{{ post.post|safe }}</p>
                     <footer>
                         <ul class="actions">
-                            <li><a href="/post/{{ post.id }}" class="button large">Continue Reading</a></li>
+                            <li><a href="{% url 'post:detail_post' post.id %}" class="button large">Continue Reading</a></li>
                         </ul>
                         <ul class="stats">
                             {#                    작성자에게만 보이는 수정하기#}
                             {% if post.writer_id == user.username %}
-                                <li><a href="/post/{{ post.id }}/update">수정하기</a></li>
+                                <li><a href="{% url 'post:post_update' post.id %}">수정하기</a></li>
                             {% endif %}
                             {#                    좋아요를 누른 사람이라면 분홍색 하트#}
                             {% if user in post.like_users.all %}
-                                <li><a href="/post/{{ post.id }}/like/"
+                                <li><a href="{% url 'post:toggle_like' post.id %}"
                                        class="icon solid fa-heart" style="color:#ff00a0">{{ post.like_count }}</a>
                                 </li>
                             {% else %}
-                                <li><a href="/post/{{ post.id }}/like/"
+                                <li><a href="{% url 'post:toggle_like' post.id %}"
                                        class="icon solid fa-heart"
                                        style="color: rgba(160, 160, 160, 0.5);">{{ post.like_count }}</a></li>
                             {% endif %}
-                            <li><a href="/post/{{ post.id }}" class="icon solid fa-comment"
-                                   style="color: rgba(160, 160, 160, 0.5);">128</a>
+                            <li><a href="{% url 'post:detail_post' post.id %}" class="icon solid fa-comment"
+                                   style="color: rgba(160, 160, 160, 0.5);">{{ post.commentcount }}</a>
                             </li>
                         </ul>
                     </footer>
@@ -104,7 +104,7 @@
                 <p class="sh_title_font" style="font-size: 45px; margin: 0px;">#<span class="G">C</span>ode</p>
                 <p class="sh_title_font" style="font-size: 45px; margin-left: 85px; margin-bottom: 30px;">share</p>
                 <p style="margin-bottom: 60px;">make by <a href="http://html5up.net">NBCamp[-1]</a></p>
-                <a href="{% url "post:post_create" %}" class="button large next">글 작성하기</a>
+                <a href="{% url 'post:post_create' %}" class="button large next">글 작성하기</a>
             </header>
         </section>
 
@@ -142,21 +142,6 @@
             </div>
         </section>
 
-        <!-- Posts List 혹시 쓸까봐 남겨둠 -->
-        <!-- <section>
-            <ul class="posts">
-                <li>
-                    <article>
-                        <header>
-                            <h3><a href="single.html">Lorem ipsum fermentum ut nisl vitae</a></h3>
-                            <time class="published" datetime="2015-10-20">October 20, 2015</time>
-                        </header>
-                        <a href="single.html" class="image"><img src="images/pic08.jpg" alt=""/></a>
-                    </article>
-                </li>
-            </ul>
-        </section> -->
-
         <!-- About -->
         <section class="blurb">
             <h2>About</h2>
@@ -167,18 +152,6 @@
             </ul>
         </section>
 
-        <!-- Footer -->
-        <section id="footer">
-            <ul class="icons">
-                <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-                <li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-                <li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-                <li><a href="#" class="icon solid fa-rss"><span class="label">RSS</span></a></li>
-                <li><a href="#" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
-            </ul>
-            <p class="copyright">&copy; Untitled. Design: <a href="http://html5up.net">HTML5 UP</a>. Images: <a
-                    href="http://unsplash.com">Unsplash</a>.</p>
-        </section>
 
     </section>
 

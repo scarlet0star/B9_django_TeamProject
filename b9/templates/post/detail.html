@@ -38,20 +38,20 @@
             <div style="margin: 20px 0px;">{{ post_detail.post|safe }}</div>
             <footer>
                 <ul class="stats">
-                    <li><a href="/post/">back</a></li>
+                    <li><a href="{% url 'user:index' %}">back</a></li>
                     {% if user in post_detail.like_users.all %}
-                        <li><a href="/post/{{ post_detail.id }}/like/"
+                        <li><a href="{% url 'user:toggle_like' post_detail.id %}"
                                class="icon solid fa-heart" style="color:#ff00a0">{{ post_detail.like_count }}</a>
                         </li>
                     {% else %}
-                        <li><a href="/post/{{ post_detail.id }}/like/"
+                        <li><a href="{% url 'user:toggle_like' post_detail.id %}"
                                class="icon solid fa-heart"
                                style="color: rgba(160, 160, 160, 0.5);">{{ post_detail.like_count }}</a></li>
                     {% endif %}
                     <li><a href="#" class="icon solid fa-comment">{{ post_detail.comment_count }}</a></li>
                     {% if post_detail.writer == user.id %}
                         <li><a href="#">수정</a></li>
-                        <li><a href="post/{{ post_detail.id }}/delete/">삭제</a></li>
+                        <li><a href="{% url 'user:delete_post' post_detail.id %}">삭제</a></li>
                     {% endif %}
                 </ul>
             </footer>
