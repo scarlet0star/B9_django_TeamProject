@@ -152,6 +152,7 @@ def detail_post(request, post_id):
         user = request.user.is_authenticated
         if user:
             post_detail = Post.objects.get(id=post_id)
+            post_detail.comment_count = Comment.objects.filter(post_id = post_id).count()
             # all_comment = Comment.
             commentform = CommentForm()
             all_comment = Comment.objects.filter(post_id=post_id)
