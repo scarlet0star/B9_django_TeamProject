@@ -23,7 +23,7 @@
                 </div>
                 <div class="meta">
                     <time class="published">{{ post_detail.created_at }}</time>
-                    <a href="#" class="author"><span
+                    <a href="{% url 'user:mypage' post_detail.writer.username %}"><span
                             class="name">{{ post_detail.writer.last_name }} {{ post_detail.writer.first_name }}</span>
                         <img src="{% static 'images/avatar.jpg' %}" alt=""/></a>
                 </div>
@@ -45,7 +45,7 @@
                                class="icon solid fa-heart"
                                style="color: rgba(160, 160, 160, 0.5);">{{ post_detail.like_count }}</a></li>
                     {% endif %}
-                    <li><a href="#" class="icon solid fa-comment">{{ post_detail.comment_count }}</a></li>
+                    <li><a href="{% url 'post:detail_post' post_detail.id %}" class="icon solid fa-comment">{{ post_detail.comment_count }}</a></li>
                     {% if post_detail.writer_id == user.username %}
                         <li><a href="{% url 'post:post_update' post_detail.id %}">수정</a></li>
                         <li><a href="{% url 'post:delete_post' post_detail.id %}">삭제</a></li>
@@ -78,7 +78,7 @@
                                         {% csrf_token %}
                                         <input type="hidden" name="comment_id" value="{{ comment.id }}">
                                         <textarea name="content" rows="3"
-                                                  style="margin-bottom: 16px;">{{ comment.content }}</textarea>
+                                                  style="margin-bottom: 16px;"></textarea>
                                         <button type="submit">등록</button>
                                         <button type="button" onclick="toggleCommentEditForm('{{ comment.id }}')">취소
                                         </button>

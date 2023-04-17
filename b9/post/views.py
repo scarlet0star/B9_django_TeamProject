@@ -160,7 +160,6 @@ def detail_post(request, post_id):
             return redirect('login')
         
 def delete_post(request, post_id):
-    print('ok')
     user = request.user
     post = Post.objects.get(id=post_id)
     if user == post.writer:

@@ -5,9 +5,9 @@
 {% endblock %}
 
 {% block content %}
-  <br />
-  <div class="container">
-    <div class="wrap" style="margin: 0px;">
+
+
+    <div class="wrap" >
       <h2 class="my-4">회원 정보 수정</h2>
       <form method="post" action="" enctype="multipart/form-data">
         {% csrf_token %}
@@ -34,10 +34,10 @@
           <input type="email" class="form-control" id="{{ form.email.id_for_label }}" name="{{ form.email.html_name }}" value="{{ user.email }}" required />
         </div>
 
-        <button type="submit" class="button large">수정하기</button>
+        <button type="submit" class="button large">수정</button>
 
-        <a type="button" class="button large" href="{% url 'user:index' %}">메인 페이지로</a>
+        <a type="button" class="button large" href="{% url 'user:mypage' user.username %}">취소</a>
       </form>
     </div>
-  </div>
+
 {% endblock %}

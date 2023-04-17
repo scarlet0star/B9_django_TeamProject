@@ -16,7 +16,6 @@
                 </section>
             <hr>
             <!-- 작성 된 글이 나오는 곳 -->
-            {#        만약, 검색창에 입력한 값이 있다면 이라는 의미입니다.#}
             {% if request.GET.query %}
                 <h1> 검색하신 '{{ request.GET.query }}' 게시글 정보입니다. </h1>
                 <br>
@@ -71,9 +70,7 @@
                     {% endfor %}
                     <hr>
                     <ul class="actions pagination">
-                        {#             만약 현재 페이지보다 이전 페이지가 존재 한다면#}
                         {% if page_obj.has_previous %}
-                            {#                    바로 전 페이지로 이동하기#}
                             <li><a href="?page=
                                     {{ page_obj.previous_page_number }}{% if query %}&query={{ query }}{% endif %}"
                                    class="button large previous">Previous
@@ -81,9 +78,7 @@
                         {% else %}
                             <li><a href=" " class="disabled button large previous">Previous Page</a></li>
                         {% endif %}
-                        {#            만약 다음 페이지가 존재 한다면#}
                         {% if page_obj.has_next %}
-                            {#                    바로 다음 페이지로 이동하기#}
                             <li><a href="?page=
                                     {{ page_obj.next_page_number }}{% if query %}&query={{ query }}{% endif %}"
                                    class="button large next">Next Page</a></li>
@@ -92,11 +87,9 @@
                         {% endif %}
                     </ul>
                 {% else %}
-                    {#                    # 검색 결과가 없을 경우 뜨는 메시지입니다.#}
                     <h1> 검색 결과가 없습니다. </h1>
                 {% endif %}
             {% else %}
-                {#                # 검색창에 아무것도 입력하지 않았을 경우 뜨는 메시지입니다.#}
                 <h1> 찾고 있는 게시글을 검색창에 입력해주세요. </h1>
             {% endif %}
             <!-- 페이지 선택 -->

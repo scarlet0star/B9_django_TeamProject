@@ -10,10 +10,9 @@
         <div class="card">
             <div class="card-body">
                 {% for post in object_list %}
-                    <h3>
-                        <a href="/post/{{ post.id }}">{{ post.title }}</a>
-                    </h3>
-                    <p style="font-size: small">{{ post.updated_at|timesince}} - {{ post.writer.username }}</p>
+                    <h3><a href="{% url 'post:detail_post' post.id %}">글 제목 : {{ post.title }}
+                    <p>작성자 : {{ post.writer.last_name }}{{ post.writer.first_name }} - {{ post.updated_at|timesince}}전</p>
+                </h3></a>
                 <hr>
                 {% endfor %}
             </div>
