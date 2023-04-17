@@ -75,7 +75,13 @@
 </head>
 
 <body class="is-preload">
-
+    {% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% endif %}
 
 <!-- Wrapper -->
 <div id="wrapper">
@@ -122,13 +128,7 @@
         </nav>
     </header>
 
-    {% if messages %}
-    {% for message in messages %}
-        <div class="alert alert-danger">
-            {{ message }}
-        </div>
-    {% endfor %}
-    {% endif %}
+ 
 
     {% block content %}
 
@@ -145,7 +145,6 @@
                     href="http://unsplash.com">Unsplash</a>.</p>
         </footer>
     </div>
-
 </div>
 
 <!-- Scripts -->

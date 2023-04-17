@@ -122,7 +122,7 @@ STATIC_URL = "/static/"
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'user', 'static'),
-    os.path.join(BASE_DIR, 'django_summernote', 'static', 'django_summernote'),
+    os.path.join(BASE_DIR, 'static', 'django_summernote'),
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
@@ -143,3 +143,5 @@ AUTHENTICATION_BACKEND = (
 
 
 SITE_ID = 1
+
+SUMMERNOTE_THEME = 'bs3' 

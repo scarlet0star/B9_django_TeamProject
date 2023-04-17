@@ -26,14 +26,9 @@ def index(request):
     post_list = Post.objects.all().order_by('-created_at')
     for post in post_list:
         post.comment_count = Comment.objects.filter(post_id = post.id).count()
-    # 포스트리스트를 5개씩 나누기
     paginator = Paginator(post_list, 4)
-    # 페이지에 해당되는 페이지의 번호를 받아오기
     page = request.GET.get('page')
-    # 페이지 번호를 받아서 해당 페이지 게시글들을 리턴하기
     posts = paginator.get_page(page)
-
-    # FollowerPostList의 로직을 추가
     user = request.user
     if user.is_authenticated:
         following_users = user.profile.follows.all()
@@ -112,8 +107,6 @@ def user_mypage(request, username):
         # 다른 사용자의 페이지인 경우 해당 사용자의 프로필 정보를 전달
         user_profile = Profile.objects.get(user=user)
         is_following = request.user.profile.is_following(profile)
-
-    print(is_following)
 
     return render(request, 'user/mypage.html', {'profile': profile, 'posts': all_mypost, 'user_profile': user_profile, 'is_following': is_following})
 
