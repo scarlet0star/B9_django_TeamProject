@@ -32,7 +32,7 @@
                         <p>{{ user.email }}</p>
                     </li>
                     <li>
-                        <p>자기소개 : {{ user.profile.subscript }}</p>
+                        <p>자기소개 : {% if user.profile.subscript == '' %}작성된 자기소개가 없습니다{% else %}{{ user.profile.subscript }}{% endif %}</p>
                     </li>
                 </ul>
                 <footer>
@@ -45,7 +45,6 @@
             {% empty %}
             <p>No users found.</p>
         {% endfor %}
-        <!-- Post -->
 
         <!-- Pagination -->
         <ul class="actions pagination">
@@ -54,9 +53,6 @@
                     <a href="?page=1{% if query %}&query={{ query }}{% endif %}&search_by={{ search_by }}"
                        class="button large">First Page</a>
                     <a href="?page=
-
-
-
                             {{ page_obj.previous_page_number }}{% if query %}&query={{ query }}{% endif %}&search_by={{ search_by }}"
                        class="button large previous">Previous Page</a>
                 {% else %}
@@ -66,15 +62,9 @@
             <li>
                 {% if page_obj.has_next %}
                     <a href="?page=
-
-
-
                             {{ page_obj.next_page_number }}{% if query %}&query={{ query }}{% endif %}&search_by={{ search_by }}"
                        class="button large next">Next Page</a>
                     <a href="?page=
-
-
-
                             {{ page_obj.paginator.num_pages }}{% if query %}&query={{ query }}{% endif %}&search_by={{ search_by }}"
                        class="button large">Last Page</a>
                 {% else %}
@@ -82,19 +72,6 @@
                 {% endif %}
             </li>
         </ul>
-
     </div>
-    <!-- Footer -->
-    <section id="footer">
-        <ul class="icons">
-            <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-            <li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-            <li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-            <li><a href="#" class="icon solid fa-rss"><span class="label">RSS</span></a></li>
-            <li><a href="#" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
-        </ul>
-        <p class="copyright">&copy; Untitled. Design: <a href="http://html5up.net">HTML5 UP</a>. Images: <a
-                href="http://unsplash.com">Unsplash</a>.</p>
-    </section>
 
 {% endblock %}

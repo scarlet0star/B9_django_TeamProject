@@ -10,8 +10,8 @@
         {{ form.as_p }}
 
         <div style="text-align: center">
-            <button type="submit" class="button large next">작성하기</button>
-            <a href="{% url 'user:index' %}" class="button large next">돌아가기</a>
+            <button type="submit" class="button large next">{% if update %}수정{% else %}글 쓰기{% endif %}</button>
+            <a href="{% url 'user:index' %}" class="button large next">취소</a>
         </div>
     </form>
 </div>

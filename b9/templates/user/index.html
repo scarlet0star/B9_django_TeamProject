@@ -6,6 +6,7 @@
 
 
 {% block content %}
+
     <!-- Main -->
     <div id="main">
         <!-- 포스트 검색기능-->
@@ -38,7 +39,7 @@
                             <time class="published" datetime="{{ post.created_at }}">{{ post.created_at|timesince }}
                                 전
                             </time>
-                            <a href="#"><span class="name">{{ post.writer.username }}</span></a>
+                            <a href="{% url 'user:mypage' post.writer.username %}"><span class="name">{{ post.writer.last_name }} {{ post.writer.first_name }}</span></a>
                         </div>
                     </header>
                     {% if post.photo %}
@@ -50,11 +51,10 @@
                             <li><a href="{% url 'post:detail_post' post.id %}" class="button large">Continue Reading</a></li>
                         </ul>
                         <ul class="stats">
-                            {#                    작성자에게만 보이는 수정하기#}
                             {% if post.writer_id == user.username %}
-                                <li><a href="{% url 'post:post_update' post.id %}">수정하기</a></li>
+                                <li><a href="{% url 'post:post_update' post.id %}">수정</a></li>
+                                <li><a href="{% url 'post:delete_post' post.id %}">삭제</a></li>
                             {% endif %}
-                            {#                    좋아요를 누른 사람이라면 분홍색 하트#}
                             {% if user in post.like_users.all %}
                                 <li><a href="{% url 'post:toggle_like' post.id %}"
                                        class="icon solid fa-heart" style="color:#ff00a0">{{ post.like_count }}</a>
@@ -65,7 +65,7 @@
                                        style="color: rgba(160, 160, 160, 0.5);">{{ post.like_count }}</a></li>
                             {% endif %}
                             <li><a href="{% url 'post:detail_post' post.id %}" class="icon solid fa-comment"
-                                   style="color: rgba(160, 160, 160, 0.5);">{{ post.commentcount }}</a>
+                                   style="color: rgba(160, 160, 160, 0.5);">{{ post.comment_count }}</a>
                             </li>
                         </ul>
                     </footer>
@@ -73,17 +73,13 @@
             {% endfor %}
             <!-- Pagination -->
             <ul class="actions pagination">
-                {#             만약 현재 페이지보다 이전 페이지가 존재 한다면#}
                 {% if posts.has_previous %}
-                    {#                    바로 전 페이지로 이동하기#}
                     <li><a href="?page={{ posts.previous_page_number }}" class="button large previous">Previous
                         Page</a></li>
                 {% else %}
                     <li><a href=" " class="disabled button large previous">Previous Page</a></li>
                 {% endif %}
-                {#            만약 다음 페이지가 존재 한다면#}
                 {% if posts.has_next %}
-                    {#                    바로 다음 페이지로 이동하기#}
                     <li><a href="?page={{ posts.next_page_number }}" class="button large next">Next Page</a></li>
                 {% else %}
                     <li><a href=" " class="disabled button large next">Next Page</a></li>
@@ -96,13 +92,12 @@
 
         <!-- Intro -->
         <section id="intro">
-            <a href="#" class="logo"><img src="images/logo.jpg" alt=""/></a>
             <header>
                 <div style="border-bottom: 1px solid white; width: 45px; margin-top: 20px;"></div>
                 <p class="sh_title_font" style="font-size: 45px; margin: 0px;">#<span class="G">C</span>ode</p>
                 <p class="sh_title_font" style="font-size: 45px; margin-left: 85px; margin-bottom: 30px;">share</p>
-                <p style="margin-bottom: 60px;">make by <a href="/user/NBcamp[-1]/">NBCamp[-1]</a></p>
-                <a href="{% url "post:post_create" %}" class="button large next">글 작성하기</a>
+                <p style="margin-bottom: 60px;">make by <a href="{% url 'user:b_9' %}">NBCamp[-1]</a></p>
+                <a href="{% url 'post:post_create' %}" class="button large next">글 작성하기</a>
             </header>
         </section>
 
@@ -122,8 +117,6 @@
                                 {% if post.author.profile.profile_image %}
                                     <a href="#" class="author"><img src="{{ post.author.profile.profile_image.url }}"
                                                                     alt=""/></a>
-                                {% else %}
-                                    <a href="#" class="author"><img src="images/avatar.jpg" alt=""/></a>
                                 {% endif %}
                             </header>
                             {% if post.photo %}

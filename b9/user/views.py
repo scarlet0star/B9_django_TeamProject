@@ -25,7 +25,7 @@ def home(request):
 def index(request):
     post_list = Post.objects.all().order_by('-created_at')
     for post in post_list:
-        post.commentcount = Comment.objects.filter(post_id = post.id).count()
+        post.comment_count = Comment.objects.filter(post_id = post.id).count()
     # 포스트리스트를 5개씩 나누기
     paginator = Paginator(post_list, 4)
     # 페이지에 해당되는 페이지의 번호를 받아오기
@@ -104,7 +104,7 @@ def user_mypage(request, username):
         post.commentcount = Comment.objects.filter(post_id = post.id).count()
     # likes = Like.objects.filter(user=username)
 
-if request.user.username == username:
+    if request.user.username == username:
         # 현재 로그인한 사용자와 페이지 주인이 같은 경우
         user_profile = profile
         is_following = None
